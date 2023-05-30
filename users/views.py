@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from .forms import OrganizerForm, ClientForm,LoginForm
 from .models import Client, Organizer, User
+from django.contrib.auth import logout
+
 
 
 def register_organizer(request):
@@ -26,8 +28,8 @@ def register_organizer(request):
     
 
 def register_client(request):
+    form = ClientForm(request.POST, request.FILES)
     if request.method == 'POST':
-        form = ClientForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
@@ -35,17 +37,17 @@ def register_client(request):
             login(request, user)
             return redirect('home')  # Redirect to the desired page after successful registration
         else : 
-            return redirect(request.META.get('HTTP_REFERER'))
-    else:
-        form = ClientForm()
-    
-    return render(request, 'register.html', {'form': form})
-
+            organizer_form = OrganizerForm
+            context = {
+         'client_form': form,
+        'organizer_form': organizer_form
+    }
+            return render(request, 'register.html',context)
 
 
 def login_view(request):
+    form = LoginForm(request, data=request.POST)
     if request.method == 'POST':
-        form = LoginForm(request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
@@ -55,12 +57,19 @@ def login_view(request):
                 if hasattr(user, 'organizer'):
                     return redirect('home')  # Redirect to home page for organizers
                 elif hasattr(user, 'client'):
-                    return  redirect('index')# Redirect to home page for clients
-    else:
-        form = LoginForm()
-    
-    return render(request, 'login.html', {'form': form})
+                    return  redirect('home')# Redirect to home page for clients
+        else:
+            context = {
+                'form': form,
+            }
+            return render(request, 'login.html', context)
+    else :
+        f = LoginForm()
+        return render(request, 'login.html', {'form': f})
 
+def logout_view(request):
+    logout(request)
+    return redirect('index')  # Replace 'home' with the URL or name of your desired homepage
 
 def home(request):
     return render(request,'home.html')
