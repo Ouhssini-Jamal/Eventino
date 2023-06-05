@@ -16,6 +16,6 @@ class Client(User):
     birthdate = models.DateField()
     phone_number = models.CharField(max_length=20)
     image = models.ImageField(upload_to='client_images/')
-    
+    cin = models.CharField(max_length=20)
     # Additional fields and methods specific to the Client model
 

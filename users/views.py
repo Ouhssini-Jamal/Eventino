@@ -20,10 +20,15 @@ def register_organizer(request):
         else : 
             client_form = ClientForm()
             context = {
-         'client_form': client_form,
         'organizer_form': organizer_form
     }
-            return render(request, 'register.html',context)
+            return render(request, 'register_organizer.html',context)
+    else:
+          organizer_form = OrganizerForm()
+    context = {
+        'organizer_form': organizer_form
+    }
+    return render(request, 'register_organizer.html', context)
         
     
 
@@ -37,13 +42,16 @@ def register_client(request):
             login(request, user)
             return redirect('home')  # Redirect to the desired page after successful registration
         else : 
-            organizer_form = OrganizerForm
             context = {
          'client_form': form,
-        'organizer_form': organizer_form
     }
-            return render(request, 'register.html',context)
-
+            return render(request, 'register_client.html',context)
+    else:
+        client_form = ClientForm() 
+    context = {
+        'client_form': client_form
+    }
+    return render(request, 'register_client.html', context)
 
 def login_view(request):
     form = LoginForm(request, data=request.POST)
@@ -73,15 +81,6 @@ def logout_view(request):
 
 def home(request):
     return render(request,'home.html')
-
-def register_view(request):
-    client_form = ClientForm()
-    organizer_form = OrganizerForm()
-    context = {
-        'client_form': client_form,
-        'organizer_form': organizer_form
-    }
-    return render(request, 'register.html', context)
 
 
 def index(request):

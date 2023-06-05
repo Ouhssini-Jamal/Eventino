@@ -11,15 +11,33 @@ class OrganizerForm(forms.ModelForm):
     confirm_password = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
     phone_number = forms.CharField(validators=[RegexValidator(r'^\+?1?\d{9,15}$', message="Invalid phone number.")])
     email = forms.CharField(validators=[EmailValidator(message="Invalid email address.")])
-    first_name = forms.CharField(validators=[RegexValidator(r'^[a-zA-Z\s]*$', message="Invalid first name.")])
-    last_name = forms.CharField(validators=[RegexValidator(r'^[a-zA-Z\s]*$', message="Invalid last name.")])
 
+    
     class Meta:
         model = Organizer
-        fields = ['username', 'first_name', 'last_name', 'email', 'password', 'confirm_password', 'phone_number', 'description', 'image', 'social_media_link']
+        fields = ['username', 'email', 'password', 'confirm_password', 'phone_number', 'description', 'image', 'social_media_link']
         widgets = {
             'password': forms.PasswordInput(),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs['class'] = 'form-control form-control-xl'
+        self.fields['username'].widget.attrs['placeholder'] = 'Organization name'
+        self.fields['email'].widget.attrs['class'] = 'form-control form-control-xl'
+        self.fields['email'].widget.attrs['placeholder'] = 'Email'
+        self.fields['password'].widget.attrs['class'] = 'form-control form-control-xl'
+        self.fields['password'].widget.attrs['placeholder'] = 'Password'
+        self.fields['confirm_password'].widget.attrs['class'] = 'form-control form-control-xl'
+        self.fields['confirm_password'].widget.attrs['placeholder'] = 'Confirm Password'
+        self.fields['phone_number'].widget.attrs['class'] = 'form-control form-control-xl'
+        self.fields['phone_number'].widget.attrs['placeholder'] = 'Phone Number'
+        self.fields['description'].widget.attrs['class'] = 'form-control form-control-xl'
+        self.fields['description'].widget.attrs['placeholder'] = 'Description'
+        self.fields['image'].widget.attrs['class'] = 'form-control form-control-xl'
+        self.fields['social_media_link'].widget.attrs['class'] = 'form-control form-control-xl'
+        self.fields['social_media_link'].widget.attrs['placeholder'] = 'Social Media Link'
+
 
     def clean(self):
         cleaned_data = super().clean()
@@ -48,12 +66,33 @@ class ClientForm(forms.ModelForm):
 
     class Meta:
         model = Client
-        fields = ['username', 'first_name', 'last_name', 'email', 'password', 'confirm_password', 'birthdate', 'phone_number', 'image']
+        fields = ['username', 'first_name', 'last_name','cin','email', 'password', 'confirm_password', 'birthdate', 'phone_number', 'image']
 
         widgets = {
             'password': forms.PasswordInput(),
             'birthdate': forms.DateInput(attrs={'type': 'date'}),
         }
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs['class'] = 'form-control form-control-xl'
+        self.fields['username'].widget.attrs['placeholder'] = 'Username'
+        self.fields['first_name'].widget.attrs['class'] = 'form-control form-control-xl'
+        self.fields['first_name'].widget.attrs['placeholder'] = 'First Name'
+        self.fields['last_name'].widget.attrs['class'] = 'form-control form-control-xl'
+        self.fields['last_name'].widget.attrs['placeholder'] = 'Last Name'
+        self.fields['email'].widget.attrs['class'] = 'form-control form-control-xl'
+        self.fields['email'].widget.attrs['placeholder'] = 'Email'
+        self.fields['password'].widget.attrs['class'] = 'form-control form-control-xl'
+        self.fields['password'].widget.attrs['placeholder'] = 'Password'
+        self.fields['confirm_password'].widget.attrs['class'] = 'form-control form-control-xl'
+        self.fields['confirm_password'].widget.attrs['placeholder'] = 'Confirm Password'
+        self.fields['birthdate'].widget.attrs['class'] = 'form-control form-control-xl'
+        self.fields['birthdate'].widget.attrs['placeholder'] = 'Birthdate'
+        self.fields['phone_number'].widget.attrs['class'] = 'form-control form-control-xl'
+        self.fields['phone_number'].widget.attrs['placeholder'] = 'Phone Number'
+        self.fields['cin'].widget.attrs['class'] = 'form-control form-control-xl'
+        self.fields['cin'].widget.attrs['placeholder'] = 'Cin'
+        self.fields['image'].widget.attrs['class'] = 'form-control form-control-xl'
 
     def clean(self):
         cleaned_data = super().clean()
