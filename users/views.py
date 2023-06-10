@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect
 from .forms import OrganizerForm, ClientForm,LoginForm
 from .models import Client, Organizer, User
 from django.contrib.auth import logout
+from django.http import HttpResponseForbidden
+
 
 
 
@@ -15,10 +17,8 @@ def register_organizer(request):
             user.set_password(organizer_form.cleaned_data['password'])
             # user.is_active = False  # Set the is_active flag to True
             user.save()
-            login(request, user)
-            return redirect('home')  # Redirect to the desired page after successful registration
+            return redirect('login_view')   # Redirect to the desired page after successful registration
         else : 
-            client_form = ClientForm()
             context = {
         'organizer_form': organizer_form
     }
@@ -30,7 +30,6 @@ def register_organizer(request):
     }
     return render(request, 'register_organizer.html', context)
         
-    
 
 def register_client(request):
     form = ClientForm(request.POST, request.FILES)
@@ -39,8 +38,7 @@ def register_client(request):
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
             user.save()
-            login(request, user)
-            return redirect('home')  # Redirect to the desired page after successful registration
+            return redirect('login_view')  # Redirect to the desired page after successful registration
         else : 
             context = {
          'client_form': form,
@@ -62,10 +60,7 @@ def login_view(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                if hasattr(user, 'organizer'):
-                    return redirect('home')  # Redirect to home page for organizers
-                elif hasattr(user, 'client'):
-                    return  redirect('home')# Redirect to home page for clients
+                return redirect('dash')    
         else:
             context = {
                 'form': form,
@@ -79,8 +74,12 @@ def logout_view(request):
     logout(request)
     return redirect('index')  # Replace 'home' with the URL or name of your desired homepage
 
-def home(request):
-    return render(request,'home.html')
+def dashboard_show(request):
+    user = request.user
+    if hasattr(user, 'organizer'):
+        return render(request, 'Dashboard-organizer.html')
+    elif hasattr(user, 'client'):
+         return render(request, 'Dashboard-client.html')
 
 
 def index(request):

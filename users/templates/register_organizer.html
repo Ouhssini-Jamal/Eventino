@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register-Organizer</title>
+    <title>Register - Organizer</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../static/css/bootstrap.css">
     <link rel="stylesheet" href="../../static/vendors/bootstrap-icons/bootstrap-icons.css">
@@ -20,19 +20,19 @@
             <div class="col-lg-5 col-12">
                 <div id="auth-left">
                     <div class="auth-logo">
-                        <a href="Dashboard-organizer.html"><img src="../../static/images/logo/logo.png" alt="Logo"></a>
+                        <a href="{% url 'index' %}"><img src="../../static/images/logo/logo.png" alt="Logo"></a>
                     </div>
                     <h1 class="auth-title">Sign Up</h1>
                     <p class="auth-subtitle mb-5">For organizers.<br>Input your data to register to our website.</p>
-
                     <form method="post" enctype="multipart/form-data" action="{% url 'registerorg' %}">
                         {% csrf_token %}
                         <div class="form-group position-relative has-icon-left mb-4">
-                            {{organizer_form.email}}
+                            {{ organizer_form.email }}
                             <div class="form-control-icon">
                                 <i class="bi bi-envelope"></i>
                             </div>
-                            <div>
+                        </div>
+                        <div>
                             {% if organizer_form.email.errors %}
                             <ul class="errorlist">
                                 {% for error in organizer_form.email.errors %}
@@ -40,47 +40,56 @@
                                 {% endfor %}
                             </ul>
                             {% endif %}
-                            </div>
                         </div>
+
                         <div class="form-group position-relative has-icon-left mb-4">
-                            {{organizer_form.username}}
+                            {{ organizer_form.username }}
                             <div class="form-control-icon">
                                 <i class="bi bi-person"></i>
                             </div>
                         </div>
-                        <div class="form-group position-relative has-icon-left mb-4">
-                            {{organizer_form.phone_number}}
-                            <div class="form-control-icon">
-                                <i class="bi bi-phone"></i>
-                            </div>
-                        </div>
-                        <div class="form-group position-relative has-icon-left mb-4">
-                            {{organizer_form.description}}
-                            <div class="form-control-icon">
-                                <i class="bi bi-textarea"></i>
-                            </div>
-                        </div>
-                        <div class="form-group position-relative has-icon-left mb-4">
-                            {{organizer_form.password}}
-                             <div class="form-control-icon">
-                                <i class="bi bi-shield-lock"></i>
-                            </div>
-                        </div>
-                        <div class="form-group position-relative has-icon-left mb-4">
-                            {{organizer_form.confirm_password}}
-                            <div class="form-control-icon">
-                                <i class="bi bi-shield-lock"></i>
-                            </div>
-                        </div>
+                
                         <div>
-                            {% if organizer_form.confirm_password.errors %}
+                            {% if organizer_form.username.errors %}
                             <ul class="errorlist">
-                                {% for error in organizer_form.confirm_password.errors %}
+                                {% for error in organizer_form.username.errors %}
                                     <li>{{ error }}</li>
                                 {% endfor %}
                             </ul>
                             {% endif %}
                         </div>
+
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            {{ organizer_form.phone_number }}
+                            <div class="form-control-icon">
+                                <i class="bi bi-phone"></i>
+                            </div>
+                        </div>
+                        <div>
+                            {% if organizer_form.phone_number.errors %}
+                            <ul class="errorlist">
+                                {% for error in organizer_form.phone_number.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            {{ organizer_form.confirm_password }}
+                            <div class="form-control-icon">
+                                <i class="bi bi-lock"></i>
+                            </div>
+                        </div>
+                     <div>
+                        {% if organizer_form.confirm_password.errors %}
+                        <ul class="errorlist">
+                            {% for error in organizer_form.confirm_password.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                     </div>
                         <div class="form-group position-relative has-icon-left mb-4 m-lg-1">
                             {{organizer_form.image}}
                             <div class="form-control-icon">
@@ -93,8 +102,10 @@
                                 <i class="bi bi-image"></i>
                             </div>
                         </div>
+                    
                         <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Sign Up</button>
                     </form>
+    
                     <div class="text-center mt-5 text-lg fs-4">
                         <p class='text-gray-600'>Already have an account? <a href="{% url 'login_view' %}"
                                 class="font-bold">Log

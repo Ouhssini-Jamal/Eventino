@@ -10,7 +10,7 @@ path('', views.index, name= 'index'),
 path('login/', views.login_view, name='login_view'),
 path('register_client/', views.register_client, name='registercli'),
 path('register_organizer/', views.register_organizer, name='registerorg'),
-path('homepage/', login_required(views.home), name='home'),
- path('logout/', views.logout_view, name='logout'),
+path('Dashboard/', login_required(views.dashboard_show), name='dash'),
+path('logout/', views.logout_view, name='logout'),
 ]
 
