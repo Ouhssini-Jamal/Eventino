@@ -39,6 +39,23 @@
                       <div><button class="btn btn-pill text-white btn-block btn-primary"><a href="{% url 'registerorg' %}">register organizer</a></button></div>
                       <div><button class="btn btn-pill text-white btn-block btn-primary"><a href="{% url 'registercli' %}">register client</a></button></div>
                   </div>
+
+                  <form action="{% url 'event_search' %}" method="get">
+                    <input type="text" name="q" placeholder="Search events">
+                    <button type="submit">Search</button>
+                  </form>
+                  {% if query %}
+                    <h2>Search results for "{{ query }}"</h2>
+                    {% if events %}
+                      <ul>
+                        {% for event in events %}
+                          <li>{{ event.name }}</li>
+                        {% endfor %}
+                      </ul>
+                    {% else %}
+                      <p>No events found.</p>
+                    {% endif %}
+                  {% endif %}
               </div>
             </div>
           </div>
