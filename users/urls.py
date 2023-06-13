@@ -13,7 +13,5 @@ path('register_organizer/', views.register_organizer, name='registerorg'),
 path('Dashboard/', login_required(views.dashboard_show), name='dash'),
 path('logout/', views.logout_view, name='logout'),
 path('search/', views.event_search, name='event_search'),
-path('add_event/', login_required(views.create_event), name='add_event'),
-
 ]
 

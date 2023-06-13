@@ -1,8 +1,9 @@
 # views.py
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
-from .forms import OrganizerForm, ClientForm,LoginForm,EventForm
-from .models import Client, Organizer, User ,Event,EventCategory
+from .forms import OrganizerForm, ClientForm,LoginForm
+from .models import Client, Organizer, User 
+from events.models import Event,EventCategory
 from django.contrib.auth import logout
 from django.http import HttpResponseForbidden
 from django.db.models import Q
@@ -102,7 +103,7 @@ def event_search(request):
         Q(name__icontains=query) |        # Search by event name (case-insensitive)
         Q(location__icontains=query) |   # Search by city (case-insensitive)
         Q(categories__name__icontains=query)   # Search by category name (case-insensitive)
-    ).exclude(status='pending').distinct()
+    ).filter(status="confirmed").distinct()
     context = {
         'query': query,
         'events': events,
@@ -110,25 +111,3 @@ def event_search(request):
 
     return render(request, 'index.html', context)
 
-def create_event(request):
-    events = Event.objects.filter(organizer_id=request.user.id)
-    if request.method == 'POST':
-        form = EventForm(request.POST, request.FILES)
-        if form.is_valid():
-            event = form.save(commit=False)
-            event.organizer_id = request.user.id  # Set the organizer_id to the current user's id
-            event.save()
-            categories = form.cleaned_data['categories']  # Get the selected categories from the form
-            for category in categories:
-                event.categories.add(category)
-            context = {
-        'events': events,
-         }
-
-            return render(request, 'add_event.html',context)  # Redirect to event detail page
-    else:
-        context = {
-            'events': events,
-            'form' : EventForm(),
-         }
-        return render(request, 'add_event.html',context )
