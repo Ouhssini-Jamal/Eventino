@@ -15,7 +15,7 @@ class EventForm(forms.ModelForm):
 
     class Meta:
         model = Event
-        fields = ['name', 'description','start_datetime' ,'end_datetime' ,'quantity_left', 'location', 'image']
+        fields = ['name', 'description','start_datetime' ,'end_datetime' ,'quantity_left','standard','mid','vip','location', 'image']
 
     def clean_quantity_left(self):
         quantity_left = self.cleaned_data.get('quantity_left')
@@ -29,3 +29,21 @@ class EventForm(forms.ModelForm):
         if start_datetime and end_datetime and start_datetime >= end_datetime:
             raise forms.ValidationError("End date must be later than the start date.")
         return end_datetime
+    
+class EventUpdateForm(forms.ModelForm):
+    name = forms.CharField(required=False)
+    description = forms.CharField(required=False, widget=forms.Textarea)
+    start_datetime = forms.DateTimeField(required=False)
+    end_datetime = forms.DateTimeField(required=False)
+    location = forms.CharField(required=False)
+    image = forms.ImageField(required=False)
+    status_choices = [
+        ('pending', 'Pending'),
+        ('confirmed', 'Confirmed'),
+    ]
+    status = forms.TypedChoiceField(choices=status_choices, required=False)
+    
+    class Meta:
+        model = Event
+        fields = ['name', 'description', 'start_datetime', 'end_datetime', 'location', 'image', 'standard','mid','vip','status']
+

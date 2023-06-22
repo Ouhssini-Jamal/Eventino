@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="../../static/css/app.css">
     <link rel="shortcut icon" href="../static/images/favicon.svg" type="image/x-icon">
 </head>
-
 <body>
     <div id="app">
         <div id="sidebar" class="active">
@@ -25,7 +24,7 @@
                 <div class="sidebar-header">
                     <div class="d-flex justify-content-between">
                         <div class="logo">
-                            <a href="{% url 'dash' %}"><img src="../../static/images/logo/logo.png" alt="Logo" srcset=""></a>
+                            <a href="../index.html"><img src="../../static/images/logo/logo.png" alt="Logo" srcset=""></a>
                         </div>
                         <div class="toggler">
                             <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -37,7 +36,7 @@
                         <li class="sidebar-title">Menu</li>
 
                         <li class="sidebar-item active ">
-                            <a href="{% url 'dash' %}" class='sidebar-link'>
+                            <a href="../index.html" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
@@ -50,14 +49,46 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href="{% url 'events:manage_org' %}">Manage</a>
+                                    <a href="{% url 'events:manage_adm' %}">Manage</a>
                                 </li>
-                                
+                            </ul>
+                        </li>
+                        <li class="sidebar-item  has-sub">
+                            <a href="" class='sidebar-link'>
+                                <i class="bi bi-person"></i>
+                                <span>Organizers</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a href="{% url 'manage_organizers' %}">Manage</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-person-plus-fill"></i>
+                                <span>Users</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a href="{% url 'manage_clients' %}">Manage</a>
+                                </li>
                             </ul>
                         </li>
                         <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-mailbox2"></i>
+                                <span>Contact us</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a href="#">View</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-person-badge"></i>
                                 <span>My profile</span>
                             </a>
                             <ul class="submenu ">
@@ -105,7 +136,7 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <h6 class="text-muted font-semibold">Current events</h6>
-                                                <h6 class="font-extrabold mb-0">{{event_count}}</h6>
+                                                <h6 class="font-extrabold mb-0">{{total_events_count}}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -117,12 +148,12 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="stats-icon blue">
-                                                    <i class="iconly-boldTick-Square"></i>
+                                                    <i class="iconly-boldProfile"></i>
                                                 </div>
                                             </div>
                                             <div class="col-md-8">
-                                                <h6 class="text-muted font-semibold">Earnings</h6>
-                                                <h6 class="font-extrabold mb-0">3200 $</h6>
+                                                <h6 class="text-muted font-semibold">Organizers</h6>
+                                                <h6 class="font-extrabold mb-0">{{total_organizers_count}}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -133,13 +164,13 @@
                                     <div class="card-body px-3 py-4-5">
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <div class="stats-icon purple">
-                                                    <i class="iconly-boldTicket"></i>
+                                                <div class="stats-icon green">
+                                                    <i class="iconly-boldAdd-User"></i>
                                                 </div>
                                             </div>
                                             <div class="col-md-8">
-                                                <h6 class="text-muted font-semibold">Bookings</h6>
-                                                <h6 class="font-extrabold mb-0">130</h6>
+                                                <h6 class="text-muted font-semibold">Users</h6>
+                                                <h6 class="font-extrabold mb-0">{{total_clients_count}}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -160,7 +191,7 @@
                                                     <svg class="bi text-primary" width="32" height="32" fill="blue"
                                                          style="width:10px">
                                                         <use
-                                                                xlink:href="../static/vendors/bootstrap-icons/bootstrap-icons.svg#circle-fill" />
+                                                                xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#circle-fill" />
                                                     </svg>
                                                     <h5 class="mb-0 ms-3">Agadir</h5>
                                                 </div>
@@ -178,7 +209,7 @@
                                                     <svg class="bi text-success" width="32" height="32" fill="blue"
                                                          style="width:10px">
                                                         <use
-                                                                xlink:href="../static/vendors/bootstrap-icons/bootstrap-icons.svg#circle-fill" />
+                                                                xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#circle-fill" />
                                                     </svg>
                                                     <h5 class="mb-0 ms-3">Casa</h5>
                                                 </div>
@@ -196,7 +227,7 @@
                                                     <svg class="bi text-danger" width="32" height="32" fill="blue"
                                                          style="width:10px">
                                                         <use
-                                                                xlink:href="../static/vendors/bootstrap-icons/bootstrap-icons.svg#circle-fill" />
+                                                                xlink:href="assets/vendors/bootstrap-icons/bootstrap-icons.svg#circle-fill" />
                                                     </svg>
                                                     <h5 class="mb-0 ms-3">Rabat</h5>
                                                 </div>
@@ -214,28 +245,19 @@
                             <div class="col-12 col-xl-8">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h4>Latest Bookings</h4>
+                                        <h4>Latest Contact Us</h4>
                                     </div>
                                     <div class="card-body">
                                         <div class="table-responsive">
                                             <table class="table table-hover table-lg">
                                                 <thead>
                                                 <tr>
-                                                    <th>Event</th>
                                                     <th>Name</th>
-                                                    <th>Message</th>
+                                                    <th>Comment</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
                                                 <tr>
-                                                    <td class="col-3">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="avatar avatar-md">
-                                                                <img src="../../static/images/faces/5.jpg">
-                                                            </div>
-                                                            <p class="font-bold ms-3 mb-0">ESSAOUIRA FES</p>
-                                                        </div>
-                                                    </td>
                                                     <td class="col-3">
                                                         <div class="d-flex align-items-center">
                                                             <div class="avatar avatar-md">
@@ -249,14 +271,6 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="col-3">
-                                                        <div class="d-flex align-items-center">
-                                                            <div class="avatar avatar-md">
-                                                                <img src="../../static/images/faces/5.jpg">
-                                                            </div>
-                                                            <p class="font-bold ms-3 mb-0">TALWIKANDT</p>
-                                                        </div>
-                                                    </td>
                                                     <td class="col-3">
                                                         <div class="d-flex align-items-center">
                                                             <div class="avatar avatar-md">

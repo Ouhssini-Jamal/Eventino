@@ -1,0 +1,12 @@
+{% for event in events %}
+  <div>
+    <h3>{{ event.name }}</h3>
+    <p>Status: {{ event.status }}</p>
+    {% if event.status == 'pending' %}
+    <form method="POST" action="{% url 'events:validate_event' event_id=event.event_id %}">
+      {% csrf_token %}
+      <button type="submit" class="validate-button">Validate</button>
+    </form>
+    {% endif %}
+  </div>
+{% endfor %}

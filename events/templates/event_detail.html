@@ -1,0 +1,27 @@
+<h1>Event Detail</h1>
+<p>Name: {{ event.name }}</p>
+<p>Description: {{ event.description }}</p>
+
+<form method="post" action="{% url 'bookings:event_booking' event_id=event.event_id %}">
+    {% csrf_token %}
+    
+    <!-- Add quantity fields for each ticket type -->
+    <label for="standard_quantity">Standard Quantity:</label>
+    <input type="number" name="standard_quantity" id="standard_quantity" min="0" required>
+    <br>
+    <label for="mid_quantity">Mid Quantity:</label>
+    <input type="number" name="mid_quantity" id="mid_quantity" min="0" required>
+    <br>
+    
+    <label for="vip_quantity">VIP Quantity:</label>
+    <input type="number" name="vip_quantity" id="vip_quantity" min="0" required>
+    <br>
+    
+    <input type="submit" value="Book Event">
+    <br>
+    {% if msg %}
+    <p>{{ msg }}</p>
+    {% endif %}
+
+</form>
+<a href="{% url 'bookings:show_bookings' event_id=event.event_id %}">show bookings</a> 

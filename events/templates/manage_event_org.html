@@ -17,16 +17,14 @@
 </head>
 <body>
     <h1>Create Event</h1>
-    <form method="POST" enctype="multipart/form-data" action ="{% url 'events:add_event' %}">
+    <form method="POST" enctype="multipart/form-data" action ="{% url 'events:create' %}">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Create</button>
     </form>
-
-
-
+    
     {% for event in events %}
-    <h3>{{ event.name }}</h3>
+    <h3><a href="{% url 'events:event_detail' event_id=event.event_id %}">{{ event.name }}</a></h3>
     <p>{{ event.description }}</p>
     <span>{{event.status}}</span>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{event.event_id}}">
@@ -42,12 +40,18 @@
               </button>
             </div>
             <div class="modal-body">
-              {{event.event_id}}
+              <form method="POST" action="{% url 'events:update_event' event_id=event.event_id %}">
+  
+                {% csrf_token %}
+                {{ form1.as_p }}
+              
+              
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
+          </form>
           </div>
         </div>
       </div>

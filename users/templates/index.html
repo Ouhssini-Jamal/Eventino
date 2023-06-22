@@ -56,10 +56,36 @@
                       <p>No events found.</p>
                     {% endif %}
                   {% endif %}
+
+                  <div>
+                    <form action="{% url 'search_events' %}" method="GET">
+                      <select name="category_id">
+                        <option value="">All Categories</option>
+                        {% for category in categories %}
+                          <option value="{{ category.category_id }}">{{ category.name }}</option>
+                        {% endfor %}
+                      </select>
+                      <button type="submit">Search</button>
+                    </form>
+                    
+                    <div id="search-results">
+                      {% for event in eventsc %}
+                        <div class="event">
+                          <h3>{{ event.name }}</h3>
+                          <p>Description: {{ event.description }}</p>
+                          <p>Start DateTime: {{ event.start_datetime }}</p>
+                          <p>End DateTime: {{ event.end_datetime }}</p>
+                          <p>Location: {{ event.location }}</p>
+                          <p>Price: {{ event.price }}</p>
+                        </div>
+                      {% empty %}
+                        <p>No events found.</p>
+                      {% endfor %}
+                    </div>
+                  </div>
               </div>
             </div>
           </div>
-
         </div>
 
       </div>

@@ -1,0 +1,36 @@
+
+
+
+  <h1>Event Bookings - {{ event.name }}</h1>
+  
+  {% if bookings %}
+    <table>
+      <thead>
+        <tr>
+          <th>Booking ID</th>
+          <th>Client</th>
+          <th>Status</th>
+          <th>Ticket Types</th>
+          <th>total price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for booking in bookings %}
+          <tr>
+            <td>{{ booking.booking_id }}</td>
+            <td>{{ booking.client.username }}</td>
+            <td>{{ booking.status }}</td>
+            <td>
+              {% for ticket_booking in booking.ticketbookingtype_set.all %}
+                {{ ticket_booking.ticket_type }}: {{ ticket_booking.quantity }} tickets<br>
+              {% endfor %}
+            </td>
+            <td>{{booking.total_price }} DH</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No bookings found for this event.</p>
+  {% endif %}
+

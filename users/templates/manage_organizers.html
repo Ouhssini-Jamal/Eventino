@@ -1,0 +1,22 @@
+<h1>Manage Organizers</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <!-- Add more fields as needed -->
+    </tr>
+  </thead>
+  <tbody>
+    {% for organizer in organizers %}
+    <tr>
+      <td>{{ organizer.id }}</td>
+      <td>{{ organizer.username }}</td>
+      <td>{{ organizer.email }}</td>
+      <!-- Add more fields as needed -->
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from .forms import OrganizerForm, ClientForm,LoginForm
 from .models import Client, Organizer, User 
-from events.models import Event,EventCategory
+from events.models import Event,EventCategory,Category
 from django.contrib.auth import logout
 from django.http import HttpResponseForbidden
 from django.db.models import Q
@@ -89,13 +89,24 @@ def logout_view(request):
 def dashboard_show(request):
     user = request.user
     if hasattr(user, 'organizer'):
-        return render(request, 'Dashboard-organizer.html')
+        event_count = user.event_set.count()
+        context = {'event_count': event_count}
+        return render(request, 'Dashboard-organizer.html',context)
     elif hasattr(user, 'client'):
          return render(request, 'Dashboard-client.html')
+    elif user.is_superuser: 
+        context = {
+        'total_events_count': Event.objects.count(),
+        'total_organizers_count': Organizer.objects.count(),
+        'total_clients_count': Client.objects.count(),
+        }
+        return render(request, 'Dashboard-admin.html',context)
 
 
 def index(request):
-     return render(request,'index.html')
+     categories = Category.objects.all()
+     context = {'categories': categories}
+     return render(request,'index.html',context)
 
 def event_search(request):
     query = request.GET.get('q', '')  # Get the search query from the request GET parameters
@@ -107,7 +118,31 @@ def event_search(request):
     context = {
         'query': query,
         'events': events,
+        'categories' : Category.objects.all(),
     }
 
     return render(request, 'index.html', context)
 
+def search_events(request):
+    if request.method == 'GET':
+        category_id = request.GET.get('category_id')
+        try:
+            category = Category.objects.get(category_id=category_id)
+            events = category.event_set.filter(status='confirmed')
+            # dd(events)
+        except Category.DoesNotExist:
+            events = Event.objects.all()
+    else:
+        events = Event.objects.all()
+
+    categories = Category.objects.all()
+    context = {'categories': categories, 'eventsc': events}
+    return render(request, 'index.html', context)
+
+def manage_clients(request):
+    clients = Client.objects.all()
+    return render(request, 'manage_clients.html', {'clients': clients})
+
+def manage_organizers(request):
+    organizers = Organizer.objects.all()
+    return render(request, 'manage_organizers.html', {'organizers': organizers})

@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import TicketType, Booking, BookingTicketInfo
+from .models import Booking,TicketBookingType
 
 # Register your models here.
-admin.site.register(TicketType)
 admin.site.register(Booking)
-admin.site.register(BookingTicketInfo)
+admin.site.register(TicketBookingType)
