@@ -230,7 +230,7 @@
                               <td>{{ event.end_datetime }}</td>
                               <td>{{ event.location }}</td>
                               <td>{{ event.quantity_left }}</td>
-                              <td><img src="/media/{{event.image}}" class="event-image" alt="Car Image" style="width: 50%; max-width: 150px; cursor:pointer;"></td>
+                              <td><img src="/media/{{event.image}}" class="event-image" alt="Car Image" id="myImg" style="width: 50%; max-width: 150px; cursor:pointer;"></td>
                               <td>
                                 {% if event.status == 'confirmed' %}
                                   <span class="badge bg-success">Active</span>
@@ -325,53 +325,56 @@
   <div id="caption"></div>
 </div>
 
-<script>
-// Get the modal
-// Get all car images with class name "car-image"
-var carImages = document.getElementsByClassName("event-image");
 
-// Get the modal element
-var modal = document.getElementById("myModal");
-var modalImg = document.getElementById("img01");
-// Get the <span> element that closes the modal
-var closeModal = document.getElementsByClassName("close")[0];
-
-// Iterate through each car image
-for (var i = 0; i < carImages.length; i++) {
-var image = carImages[i];
-
-// Set click event handler for each car image
-image.onclick = function() {
-  // Get the clicked image source and alt text
-  
-  modal.style.display = "block";
-  modalImg.src = this.src;
-  captionText.innerHTML = this.alt;
-  // Set the clicked image source and alt text in the modal
-};
-closeModal.onclick = function() {
-modal.style.display = "none";
-};
-
-// Close the modal when the user clicks outside the modal content
-window.onclick = function(event) {
-if (event.target == modal) {
-  modal.style.display = "none";
-}
-};
-}
 </script>
 <script src="../../static/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <script src="../../static/js/bootstrap.bundle.min.js"></script>
 <script src="../../static/vendors/simple-datatables/simple-datatables.js"></script>
-<script src="../../static/vendors/apexcharts/apexcharts.js"></script>
-<script src="../../static/js/pages/dashboard.js"></script>
+<!-- <script src="../../static/vendors/apexcharts/apexcharts.js"></script>
+<script src="../../static/js/pages/dashboard.js"></script> -->
 <script src="../../static/js/main.js"></script>
 <script>
   // Simple Datatable
   let table1 = document.querySelector('#table1');
   let dataTable = new simpleDatatables.DataTable(table1);
 </script>
+
+<script>
+  // Get the modal
+  // Get all car images with class name "car-image"
+  var carImages = document.getElementsByClassName("event-image");
+  
+  // Get the modal element
+  var modal = document.getElementById("myModal");
+  var modalImg = document.getElementById("img01");
+  // Get the <span> element that closes the modal
+  var closeModal = document.getElementsByClassName("close")[0];
+  
+  // Iterate through each car image
+  for (var i = 0; i < carImages.length; i++) {
+  var image = carImages[i];
+  
+  // Set click event handler for each car image
+  image.onclick = function() {
+    // Get the clicked image source and alt text
+    
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    captionText.innerHTML = this.alt;
+    // Set the clicked image source and alt text in the modal
+  };
+  closeModal.onclick = function() {
+  modal.style.display = "none";
+  };
+  
+  // Close the modal when the user clicks outside the modal content
+  window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+  };
+  }
+  </script>
 </body>
 
 </html>

@@ -163,7 +163,7 @@
                                     <td>{{ event.end_datetime }}</td>
                                     <td>{{ event.location }}</td>
                                     <td>{{ event.quantity_left }}</td>
-                                    <td><img src="/media/{{event.image}}" class="event-image" alt="Event Image"  id="myImg" style="width: 50%; max-width: 150px; cursor:pointer;"></td>
+                                    <td><img src="/media/{{event.image}}" class="event-image" alt="Event Image" id="myImg style="width: 50%; max-width: 150px; cursor:pointer;"></td>
                                     <td>
                                       {% if event.status == 'confirmed' %}
                                         <span class="badge bg-success">Active</span>
@@ -191,7 +191,6 @@
 
               </section>
           </div>
-          <img src="/media/event_images/1.jpg" class="event-image" alt="Car Image" id="myImg" style="width: 50%; max-width: 150px; cursor:pointer;">
           <footer>
               <div class="footer clearfix mb-0 text-muted">
                   <div class="float-start">
@@ -231,6 +230,22 @@ span.onclick = function() {
   modal.style.display = "none";
 }
 </script> -->
+
+
+
+<script src="{% static 'vendors/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+<!-- <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script> -->
+<script src="{% static 'vendors/simple-datatables/simple-datatables.js' %}"></script>
+<!-- <script src="{% static 'vendors/apexcharts/apexcharts.js' %}"></script> -->
+<!-- <script src="{% static 'js/pages/dashboard.js' %}"></script> -->
+<script src="{% static 'js/main.js' %}"></script>
+
+ <script>
+   // Simple Datatable
+   let table1 = document.querySelector('#table1');
+   let dataTable = new simpleDatatables.DataTable(table1);
+ </script>
+
 <script>
     // Get the modal
    // Get all car images with class name "car-image"
@@ -269,33 +284,6 @@ span.onclick = function() {
     }
   };
 </script>
-
-
-<script src="{% static 'vendors/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
-<!-- <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script> -->
-<script src="{% static 'vendors/simple-datatables/simple-datatables.js' %}"></script>
-<!-- <script src="{% static 'vendors/apexcharts/apexcharts.js' %}"></script> -->
-<!-- <script src="{% static 'js/pages/dashboard.js' %}"></script> -->
-<script src="{% static 'js/main.js' %}"></script>
-
- <script>
-   // Simple Datatable
-   let table1 = document.querySelector('#table1');
-   let dataTable = new simpleDatatables.DataTable(table1);
- </script>
-
-<!-- {% for event in events %}
-  <div>
-    <h3>{{ event.name }}</h3>
-    <p>Status: {{ event.status }}</p>
-    {% if event.status == 'pending' %}
-    <form method="POST" action="{% url 'events:validate_event' event_id=event.event_id %}">
-      {% csrf_token %}
-      <button type="submit" class="validate-button">Validate</button>
-    </form>
-    {% endif %}
-  </div>
-{% endfor %} -->
 
 </body>
 
