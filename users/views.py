@@ -103,7 +103,14 @@ def dashboard_show(request):
                    }
         return render(request, 'Dashboard-organizer.html',context)
     elif hasattr(user, 'client'):
-         return render(request, 'Dashboard-client.html')
+        bk = Booking.objects.filter(client=user, status='confirmed')
+        total_bookings = bk.count()
+        total_spending = bk.aggregate(sum_total=Sum('total_price'))
+        total_spending = total_spending['sum_total'] or 0
+        context = {'total_bookings': total_bookings,
+                   'total_spending': total_spending,
+                   }
+        return render(request, 'Dashboard-client.html',context)
     elif user.is_superuser: 
         context = {
         'total_events_count': Event.objects.count(),
