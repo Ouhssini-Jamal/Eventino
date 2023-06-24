@@ -2,39 +2,299 @@
 <html>
 <head>
     <title>Create Event</title>
+    <!DOCTYPE html>
+    <html lang="en">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Dashboard - Mazer Admin Dashboard</title>
     
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../static/css/bootstrap.css">
-    <link rel="stylesheet" href="../../static/vendors/iconly/bold.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../../static/vendors/perfect-scrollbar/perfect-scrollbar.css">
-    <link rel="stylesheet" href="../../static/vendors/bootstrap-icons/bootstrap-icons.css">
-    <link rel="stylesheet" href="../../static/css/app.css">
-    <link rel="shortcut icon" href="../static/images/favicon.svg" type="image/x-icon">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../../static/css/bootstrap.css">
+    
+        <link rel="stylesheet" href="../../static/vendors/iconly/bold.css">
+    
+        <link rel="stylesheet" href="../../static/vendors/perfect-scrollbar/perfect-scrollbar.css">
+        <link rel="stylesheet" href="../../static/vendors/bootstrap-icons/bootstrap-icons.css">
+        <link rel="stylesheet" href="../../static/css/pages/main.css">
+        <link rel="stylesheet" href="../../static/css/app.css">
+        <link rel="shortcut icon" href="../static/images/favicon.svg" type="image/x-icon">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        
+      
+    <!-- <style>
+      #myImg {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#myImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal-img {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (Image) */
+.modal-content-img {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation - Zoom in the Modal */
+.modal-content-img, #caption {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {transform:scale(0)}
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .modal-content-img {
+    width: 100%;
+  }
+}
+    </style> -->
 </head>
 <body>
-    <h1>Create Event</h1>
-    <form method="POST" enctype="multipart/form-data" action ="{% url 'events:create' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Create</button>
+  <div id="app">
+    <div id="sidebar" class="active">
+        <div class="sidebar-wrapper active">
+            <div class="sidebar-header">
+                <div class="d-flex justify-content-between">
+                    <div class="logo">
+                        <a href="{% url 'dash' %}"><img src="../../static/images/logo/logo.png" alt="Logo" srcset=""></a>
+                    </div>
+                    <div class="toggler">
+                        <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-menu">
+                <ul class="menu">
+                    <li class="sidebar-title">Menu</li>
+
+                    <li class="sidebar-item active ">
+                        <a href="{% url 'dash' %}" class='sidebar-link'>
+                            <i class="bi bi-grid-fill"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item  has-sub">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-calendar3-event"></i>
+                            <span>Events</span>
+                        </a>
+                        <ul class="submenu ">
+                            <li class="submenu-item ">
+                                <a href="{% url 'events:manage_org' %}">Manage</a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                    <li class="sidebar-item  has-sub">
+                        <a href="#" class='sidebar-link'>
+                            <i class="bi bi-mailbox2"></i>
+                            <span>My profile</span>
+                        </a>
+                        <ul class="submenu ">
+                            <li class="submenu-item ">
+                              <a href="{% url 'organizer_profile' %}">Manage</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="{% url 'logout' %}" class='sidebar-link'>
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Log Out</span>
+                        </a>
+                    </li>
+
+                    <!--<li class="sidebar-title">Forms &amp; Tables</li>-->
+
+                </ul>
+            </div>
+            <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+        </div>
+    </div>
+    <div id="main">
+      <header class="mb-3">
+          <a href="#" class="burger-btn d-block d-xl-none">
+              <i class="bi bi-justify fs-3"></i>
+          </a>
+      </header>
+      <div class="page-heading">
+          <div class="page-title">
+              <div class="row">
+                  <div class="col-12 col-md-6 order-md-1 order-last mb-5">
+                      <h3>Event details</h3>
+                  </div>
+                  
+                  <div class="col-12 col-md-6 order-md-2 order-first">
+                      <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                          <ol class="breadcrumb">
+                              <li class="breadcrumb-item"><a href="Dashboard-organizer.html">Dashboard</a></li>
+                              <li class="breadcrumb-item active" aria-current="page">Even details</li>
+                          </ol>
+                      </nav>
+                  </div>
+              </div>
+              <div class="col-xs-6">
+                <a href="#addEventModal" class="btn btn-success" data-toggle="modal" style="
+                margin-bottom: 20px;
+                margin-left: 62em;
+            "><span>Add New Event</span></a>				
+              </div>
+          </div>
+          <section class="section">
+            <div class="card">
+                <div class="card-header">
+                    Details and Management
+                </div>
+                <div class="card-body">
+                  <table class="table table-striped" id="table1">
+                      <thead>
+                          <tr>
+                              <th>Event</th>
+                              <th>Categories</th>
+                              <th>Starts at</th>
+                              <th>Ends at</th>
+                              <th>Location</th>
+                              <th>Remaining tickets</th>
+                              <th>Image</th>
+                              <th>Status</th>
+                              <th>Actions</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for event in events %}
+                          <tr>
+                            <td><a href="{% url 'bookings:show_bookings' event_id=event.event_id %}">{{ event.name }}</a></td>
+                              <td>
+                                  {% for category in event.categories.all %}
+                                      {{ category.name }}
+                                      {% if not forloop.last %}, {% endif %}
+                                  {% endfor %}
+                              </td>
+                              <td>{{ event.start_datetime }}</td>
+                              <td>{{ event.end_datetime }}</td>
+                              <td>{{ event.location }}</td>
+                              <td>{{ event.quantity_left }}</td>
+                              <td><img src="/media/{{event.image}}" class="event-image" alt="Car Image" style="width: 50%; max-width: 150px; cursor:pointer;"></td>
+                              <td>
+                                {% if event.status == 'confirmed' %}
+                                  <span class="badge bg-success">Active</span>
+                                {%elif event.status == 'pending'%}
+                                <span class="badge bg-danger">Pending</span>
+                                {%else%}
+                                <span class="badge bg-danger">Cancelled</span>
+                               {% endif %}
+                              </td>
+                              <td>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{event.event_id}}">
+                                  edit
+                              </button> 
+                              </td>
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+              </div>
+              
+            </div>
+        </section>
+      </div>
+
+      <footer>
+        <div class="footer clearfix mb-0 text-muted">
+            <div class="float-start">
+                <p>2023 &copy; AYB @ JML</p>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<div class="modal fade" id="addEventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Event</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" enctype="multipart/form-data" action ="{% url 'events:create' %}">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <div class="modal-footer">
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">add</button>
+      </div>
     </form>
-    
-    {% for event in events %}
-    <h3><a href="{% url 'events:event_detail' event_id=event.event_id %}">{{ event.name }}</a></h3>
-    <p>{{ event.description }}</p>
-    <span>{{event.status}}</span>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{event.event_id}}">
-        edit
-    </button>
-    <div class="modal fade" id="{{event.event_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    </div>
+  </div>
+</div>
+
+    {% for event in events %} 
+     <div class="modal fade" id="{{event.event_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Edit event</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -56,5 +316,83 @@
         </div>
       </div>
     {% endfor %}
+<div id="myModal" class="modal-img">
+  <!-- The Close Button -->
+  <span class="close">&times;</span>
+  <!-- Modal Content (The Image) -->
+  <img class="modal-content-img" id="img01">
+  <!-- Modal Caption (Image Text) -->
+  <div id="caption"></div>
+</div>
+
+<script>
+// Get the modal
+// Get all car images with class name "car-image"
+var carImages = document.getElementsByClassName("event-image");
+
+// Get the modal element
+var modal = document.getElementById("myModal");
+var modalImg = document.getElementById("img01");
+// Get the <span> element that closes the modal
+var closeModal = document.getElementsByClassName("close")[0];
+
+// Iterate through each car image
+for (var i = 0; i < carImages.length; i++) {
+var image = carImages[i];
+
+// Set click event handler for each car image
+image.onclick = function() {
+  // Get the clicked image source and alt text
+  
+  modal.style.display = "block";
+  modalImg.src = this.src;
+  captionText.innerHTML = this.alt;
+  // Set the clicked image source and alt text in the modal
+};
+closeModal.onclick = function() {
+modal.style.display = "none";
+};
+
+// Close the modal when the user clicks outside the modal content
+window.onclick = function(event) {
+if (event.target == modal) {
+  modal.style.display = "none";
+}
+};
+}
+</script>
+<script src="../../static/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="../../static/js/bootstrap.bundle.min.js"></script>
+<script src="../../static/vendors/simple-datatables/simple-datatables.js"></script>
+<script src="../../static/vendors/apexcharts/apexcharts.js"></script>
+<script src="../../static/js/pages/dashboard.js"></script>
+<script src="../../static/js/main.js"></script>
+<script>
+  // Simple Datatable
+  let table1 = document.querySelector('#table1');
+  let dataTable = new simpleDatatables.DataTable(table1);
+</script>
 </body>
+
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -48,3 +48,20 @@ def show_bookings(request, event_id):
         'bookings': bookings,
     }
     return render(request, 'event_bookings.html', context)
+
+def client_bookings(request):
+    # Retrieve bookings for the client
+    bookings = Booking.objects.filter(client=request.user)
+
+    # Retrieve booking ticket types for each booking
+    booking_ticket_types = []
+    for booking in bookings:
+        ticket_types = TicketBookingType.objects.filter(booking=booking)
+        booking_ticket_types.append((booking, ticket_types))
+
+    context = {
+        'bookings': booking_ticket_types
+    }
+
+    return render(request, 'manage_client_bookings.html', context)
+

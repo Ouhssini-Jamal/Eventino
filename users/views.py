@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from .forms import OrganizerForm, ClientForm,LoginForm
 from .models import Client, Organizer, User 
+from bookings.models import Booking
 from events.models import Event,EventCategory,Category
 from django.contrib.auth import logout
 from django.http import HttpResponseForbidden
@@ -85,12 +86,21 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('index')  # Replace 'home' with the URL or name of your desired homepage
+from django.db.models import Sum
 
 def dashboard_show(request):
     user = request.user
     if hasattr(user, 'organizer'):
         event_count = user.event_set.count()
-        context = {'event_count': event_count}
+        events = Event.objects.filter(organizer=user)
+        confirmed_bookings = Booking.objects.filter(event__in=events, status='confirmed')
+        total_earnings = confirmed_bookings.aggregate(Sum('total_price'))['total_price__sum']
+        if total_earnings is None : total_earnings = 0
+        total_bookings = confirmed_bookings.count()
+        context = {'event_count': event_count,
+                   'total_earnings': total_earnings,
+                   'total_bookings' : total_bookings
+                   }
         return render(request, 'Dashboard-organizer.html',context)
     elif hasattr(user, 'client'):
          return render(request, 'Dashboard-client.html')
@@ -145,4 +155,25 @@ def manage_clients(request):
 
 def manage_organizers(request):
     organizers = Organizer.objects.all()
+    for organizer in organizers:
+        event_count = organizer.event_set.count()
+        organizer.event_count = event_count
     return render(request, 'manage_organizers.html', {'organizers': organizers})
+
+
+def validate_organizer(request, id):
+    organizer = Organizer.objects.get(id=id)
+        # Perform validation logic here
+    organizer.is_active = True
+    organizer.save()
+        # Redirect to a success page or a different URL
+    return redirect('manage_organizers')
+
+def admin_profile(request):
+    return render(request, 'admin_profile.html')
+
+def organizer_profile(request):
+    return render(request, 'organizer_profile.html')
+
+def client_profile(request):
+    return render(request, 'client_profile.html')

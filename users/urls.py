@@ -16,5 +16,11 @@ path('search/', views.event_search, name='event_search'),
 path('searchByCategory/', views.search_events, name='search_events'),
 path('clients/admin/', login_required(views.manage_clients), name='manage_clients'),
 path('organizers/admin/', login_required(views.manage_organizers), name='manage_organizers'),
+path('validate_organizer/<int:id>/', login_required(views.validate_organizer), name='validate_organizer'),
+path('profile/admin/', login_required(views.admin_profile), name='admin_profile'),
+path('organizer/profile/', login_required(views.organizer_profile), name='organizer_profile'),
+path('client/profile/',login_required(views.client_profile), name='client_profile'),
+
+
 ]
 

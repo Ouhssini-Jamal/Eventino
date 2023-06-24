@@ -1,4 +1,290 @@
-{% for event in events %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Mazer Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/iconly/bold.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/perfect-scrollbar/perfect-scrollbar.css' %}">
+    <link rel="stylesheet" href="{% static 'vendors/bootstrap-icons/bootstrap-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pages/main.css' %}">
+    <link rel="shortcut icon" href="{% static 'images/favicon.svg' %}" type="image/x-icon">
+   
+</head>
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between">
+                        <div class="logo">
+                            <a href="/Dashboard"><img src="../../static/images/logo/logo.png" alt="Logo" srcset=""></a>
+                        </div>
+                        <div class="toggler">
+                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-title">Menu</li>
+
+                        <li class="sidebar-item active ">
+                            <a href="/Dashboard" class='sidebar-link'>
+                                <i class="bi bi-grid-fill"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-calendar3-event"></i>
+                                <span>Events</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a href="{% url 'events:manage_adm' %}">Manage</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item  has-sub">
+                            <a href="" class='sidebar-link'>
+                                <i class="bi bi-person"></i>
+                                <span>Organizers</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a href="{% url 'manage_organizers' %}">Manage</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-person-plus-fill"></i>
+                                <span>Users</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a href="{% url 'manage_clients' %}">Manage</a>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-person-badge"></i>
+                                <span>My profile</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a href="#">Manage</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{% url 'logout' %}" class='sidebar-link'>
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Log Out</span>
+                            </a>
+                        </li>
+
+                        <!--<li class="sidebar-title">Forms &amp; Tables</li>-->
+
+                    </ul>
+                </div>
+                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+            </div>
+        </div>
+        <div id="main">
+          <header class="mb-3">
+              <a href="#" class="burger-btn d-block d-xl-none">
+                  <i class="bi bi-justify fs-3"></i>
+              </a>
+          </header>
+
+          <div class="page-heading">
+              <h3></h3>
+          </div>
+          <div class="page-heading">
+              <div class="page-title">
+                  <div class="row">
+                      <div class="col-12 col-md-6 order-md-1 order-last mb-5">
+                          <h3>Event details</h3>
+                      </div>
+                      <div class="col-12 col-md-6 order-md-2 order-first">
+                          <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                              <ol class="breadcrumb">
+                                  <li class="breadcrumb-item"><a href="Dashboard-admin.html">Dashboard</a></li>
+                                  <li class="breadcrumb-item active" aria-current="page">Events details</li>
+                              </ol>
+                          </nav>
+                      </div>
+                  </div>
+              </div>
+              <section class="section">
+                  <div class="card">
+                      <div class="card-header">
+                          Details and Management
+                      </div>
+                      <div class="card-body">
+                        <table class="table table-striped" id="table1">
+                            <thead>
+                                <tr>
+                                    <th>Organizer</th>
+                                    <th>Event</th>
+                                    <th>Categories</th>
+                                    <th>Starts at</th>
+                                    <th>Ends at</th>
+                                    <th>Location</th>
+                                    <th>Remaining tickets</th>
+                                    <th>Image</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for event in events %}
+                                <tr>
+                                    <td>{{ event.organizer }}</td>
+                                    <td>{{ event.name }}</td>
+                                    <td>
+                                        {% for category in event.categories.all %}
+                                            {{ category.name }}
+                                            {% if not forloop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    <td>{{ event.start_datetime }}</td>
+                                    <td>{{ event.end_datetime }}</td>
+                                    <td>{{ event.location }}</td>
+                                    <td>{{ event.quantity_left }}</td>
+                                    <td><img src="/media/{{event.image}}" class="event-image" alt="Event Image"  id="myImg" style="width: 50%; max-width: 150px; cursor:pointer;"></td>
+                                    <td>
+                                      {% if event.status == 'confirmed' %}
+                                        <span class="badge bg-success">Active</span>
+                                      {%elif event.status == 'pending'%}
+                                      <span class="badge bg-danger">Pending</span>
+                                      {%else%}
+                                      <span class="badge bg-danger">Cancelled</span>
+                                     {% endif %}
+                                    </td>
+                                    <td>
+                                      {% if event.status == 'pending' %}
+                                      <form method="POST" action="{% url 'events:validate_event' event_id=event.event_id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-success">Validate</button>
+                                      </form>
+                                      {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                  </div>
+
+              </section>
+          </div>
+          <img src="/media/event_images/1.jpg" class="event-image" alt="Car Image" id="myImg" style="width: 50%; max-width: 150px; cursor:pointer;">
+          <footer>
+              <div class="footer clearfix mb-0 text-muted">
+                  <div class="float-start">
+                      <p>2023 &copy; AYB @ JML</p>
+                  </div>
+              </div>
+          </footer>
+      </div>
+  </div>
+
+ <!-- The Modal -->
+ <div id="myModal" class="modal-img">
+    <span class="close">&times;</span>
+    <img class="modal-content-img" id="img01">
+    <div id="caption"></div>
+  </div>
+  
+  <!-- <script>
+ // Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+var img = document.getElementById("myImg");
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+img.onclick = function(){
+  modal.style.display = "block";
+  modalImg.src = this.src;
+  captionText.innerHTML = this.alt;
+}
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+</script> -->
+<script>
+    // Get the modal
+   // Get all car images with class name "car-image"
+  var carImages = document.getElementsByClassName("event-image");
+  
+  // Get the modal element
+  var modal = document.getElementById("myModal");
+  var modalImg = document.getElementById("img01");
+  // Get the <span> element that closes the modal
+  var closeModal = document.getElementsByClassName("close")[0];
+  
+  // Iterate through each car image
+  for (var i = 0; i < carImages.length; i++) {
+    var image = carImages[i];
+  
+    // Set click event handler for each car image
+    image.onclick = function() {
+      // Get the clicked image source and alt text
+      
+      modal.style.display = "block";
+      modalImg.src = this.src;
+      captionText.innerHTML = this.alt;
+      // Set the clicked image source and alt text in the modal
+    };
+  }
+  
+  // Close the modal when the close button is clicked
+  closeModal.onclick = function() {
+    modal.style.display = "none";
+  };
+  
+  // Close the modal when the user clicks outside the modal content
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+</script>
+
+
+<script src="{% static 'vendors/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+<!-- <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script> -->
+<script src="{% static 'vendors/simple-datatables/simple-datatables.js' %}"></script>
+<!-- <script src="{% static 'vendors/apexcharts/apexcharts.js' %}"></script> -->
+<!-- <script src="{% static 'js/pages/dashboard.js' %}"></script> -->
+<script src="{% static 'js/main.js' %}"></script>
+
+ <script>
+   // Simple Datatable
+   let table1 = document.querySelector('#table1');
+   let dataTable = new simpleDatatables.DataTable(table1);
+ </script>
+
+<!-- {% for event in events %}
   <div>
     <h3>{{ event.name }}</h3>
     <p>Status: {{ event.status }}</p>
@@ -9,4 +295,8 @@
     </form>
     {% endif %}
   </div>
-{% endfor %}
+{% endfor %} -->
+
+</body>
+
+</html>

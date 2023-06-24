@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Mazer Admin Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/css/bootstrap.css">
+
+    <link rel="stylesheet" href="../../static/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="../../static/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="../../static/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../static/css/app.css">
+    <link rel="shortcut icon" href="../static/images/favicon.svg" type="image/x-icon">
+</head>
+<body>
+    <div id="app">
+        <div id="sidebar" class="active">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between">
+                        <div class="logo">
+                            <a href="{% url 'dash' %}"><img src="../../static/images/logo/logo.png" alt="Logo" srcset=""></a>
+                        </div>
+                        <div class="toggler">
+                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-title">Menu</li>
+
+                        <li class="sidebar-item active ">
+                            <a href="{% url 'dash' %}" class='sidebar-link'>
+                                <i class="bi bi-grid-fill"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-calendar3-event"></i>
+                                <span>Events</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a href="{% url 'events:manage_org' %}">Manage</a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                        <li class="sidebar-item  has-sub">
+                            <a href="#" class='sidebar-link'>
+                                <i class="bi bi-mailbox2"></i>
+                                <span>My profile</span>
+                            </a>
+                            <ul class="submenu ">
+                                <li class="submenu-item ">
+                                    <a href="{% url 'organizer_profile' %}">Manage</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="{% url 'logout' %}" class='sidebar-link'>
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Log Out</span>
+                            </a>
+                        </li>
+
+                        <!--<li class="sidebar-title">Forms &amp; Tables</li>-->
+
+                    </ul>
+                </div>
+                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+            </div>
+        </div>
+        <div id="main">
+            <header class="mb-3">
+                <a href="#" class="burger-btn d-block d-xl-none">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
+            </header>
+
+            <div class="page-content">
+                <div class="container pt-lg-5" style="width: 1200px;">
+
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+
+                            <h3>My Profile</h3>
+
+                        </div>
+                    </div>
+
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <form action="#" enctype="multipart/form-data" method="post">
+
+
+
+                                <div class="row pt-lg-5">
+
+                                    <div class="col-5 offset-3 ">
+
+                                        <div style="margin-bottom: 1rem;">
+
+                                            <input
+                                                    type="text" class="form-control form-control-lg "
+                                                    name="name" value="" placeholder="Name" autocomplete="name">
+
+
+                                        </div>
+
+                                        <div style="margin-bottom: 1rem;">
+
+                                            <input type="email"
+                                                   class="form-control form-control-lg"
+                                                   name="email" value="" placeholder="Email"  autocomplete="email">
+
+                                        </div>
+                                        <div style="margin-bottom: 1rem;">
+
+                                            <input type="text"
+                                                   class="form-control form-control-lg"
+                                                   name="Phone number" value="" placeholder="Phone number"  autocomplete="Phone number">
+
+                                        </div>
+                                        <div style="margin-bottom: 1rem;">
+
+                                            <input type="text"
+                                                   class="form-control form-control-lg"
+                                                   name="Description" value="" placeholder="Description"  autocomplete="Description">
+
+                                        </div>
+                                        <div style="margin-bottom: 1rem;">
+
+                                            <input
+                                                    type="password" class="form-control form-control-lg "
+                                                    name="password"  placeholder="Password"  autocomplete="password" >
+
+
+                                        </div>
+
+                                        <div style="margin-bottom: 1rem;">
+
+                                            <input
+                                                    type="file" class="form-control form-control-lg "
+                                                    name="Image"   >
+
+
+                                        </div>
+
+                                        <div class="row pt-4">
+
+                                            <div class="col-9 offset-3">
+                                                <button type="submit" class="btn btn-primary btn-lg">Update</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <footer>
+                <div class="footer clearfix mb-0 text-muted">
+                    <div class="float-start">
+                        <p>2023 &copy; AYB @ JML</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+</div>
+<script src="../../static/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="../../static/js/bootstrap.bundle.min.js"></script>
+
+<script src="../../static/vendors/apexcharts/apexcharts.js"></script>
+<script src="../../static/js/pages/dashboard.js"></script>
+
+<script src="../../static/js/main.js"></script>
+</body>
+</html>

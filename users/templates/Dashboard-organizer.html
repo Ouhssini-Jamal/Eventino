@@ -62,7 +62,7 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href="#">Manage</a>
+                                    <a href="{% url 'organizer_profile' %}">Manage</a>
                                 </li>
                             </ul>
                         </li>
@@ -122,7 +122,7 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <h6 class="text-muted font-semibold">Earnings</h6>
-                                                <h6 class="font-extrabold mb-0">3200 $</h6>
+                                                <h6 class="font-extrabold mb-0">{{total_earnings}} DH</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -139,7 +139,7 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <h6 class="text-muted font-semibold">Bookings</h6>
-                                                <h6 class="font-extrabold mb-0">130</h6>
+                                                <h6 class="font-extrabold mb-0">{{total_bookings}}</h6>
                                             </div>
                                         </div>
                                     </div>

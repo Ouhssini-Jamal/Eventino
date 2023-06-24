@@ -24,7 +24,7 @@
                 <div class="sidebar-header">
                     <div class="d-flex justify-content-between">
                         <div class="logo">
-                            <a href="../index.html"><img src="../../static/images/logo/logo.png" alt="Logo" srcset=""></a>
+                            <a href="/Dashboard"><img src="../../static/images/logo/logo.png" alt="Logo" srcset=""></a>
                         </div>
                         <div class="toggler">
                             <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -36,7 +36,7 @@
                         <li class="sidebar-title">Menu</li>
 
                         <li class="sidebar-item active ">
-                            <a href="../index.html" class='sidebar-link'>
+                            <a href="/Dashboard" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
@@ -75,17 +75,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-mailbox2"></i>
-                                <span>Contact us</span>
-                            </a>
-                            <ul class="submenu ">
-                                <li class="submenu-item ">
-                                    <a href="#">View</a>
-                                </li>
-                            </ul>
-                        </li>
+              
                         <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-person-badge"></i>
@@ -93,7 +83,7 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href="#">Manage</a>
+                                    <a href="{% url 'admin_profile' %}">Manage</a>
                                 </li>
                             </ul>
                         </li>

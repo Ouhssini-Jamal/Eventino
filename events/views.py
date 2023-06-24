@@ -16,6 +16,7 @@ def create_event(request):
                 event.categories.add(category)
             context = {
         'events': events,
+        'form' : EventForm(),
         'form1' : EventUpdateForm(),
          }
 

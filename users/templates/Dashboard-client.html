@@ -37,7 +37,7 @@
                         <li class="sidebar-title">Menu</li>
 
                         <li class="sidebar-item active ">
-                            <a href="Dashboard-user.html" class='sidebar-link'>
+                            <a href="/Dashboard" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Dashboard</span>
                             </a>
@@ -50,21 +50,11 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href="#">Manage</a>
+                                    <a href="{% url 'bookings:client_bookings'%}">Manage</a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-person"></i>
-                                <span>Contact Us</span>
-                            </a>
-                            <ul class="submenu ">
-                                <li class="submenu-item ">
-                                    <a href="#">Manage</a>
-                                </li>
-                            </ul>
-                        </li>
+                
                         <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-person-plus-fill"></i>
@@ -72,7 +62,7 @@
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href=#>Manage</a>
+                                    <a href="{% url 'client_profile'%}">Manage</a>
                                 </li>
                             </ul>
                         </li>
