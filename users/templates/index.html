@@ -2,100 +2,354 @@
 {% load static %}
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="{% static 'fonts/icomoon/style.css' %}">
-
-    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-
-    <!-- Style -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  
+    <title>Eventino Home Page</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+  
+    <!-- Favicons -->
+    <link href="../../static/images/favicon.png" rel="icon">
+    <link href="../../static/images/apple-touch-icon.png" rel="apple-touch-icon">
+  
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Amatic+SC:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  
+    <!-- vendors CSS Files -->
+    <link href="../../static/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../static/vendors/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../../static/vendors/aos/aos.css" rel="stylesheet">
+    <link href="../../static/vendors/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="../../static/vendors/swiper/swiper-bundle.min.css" rel="stylesheet">
+  
+    <!-- Template Main CSS File -->
+    <link href="../../static/css/main.css" rel="stylesheet">
 
     <title>Multiple user login</title>
   </head>
   <body>
-  <div class="content">
+    {% include 'header_component.html' %}
+    <!-- ======= Hero Section ======= -->
+  <section id="hero" class="hero d-flex align-items-center section-bg">
     <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-md-6 contents">
-          <div class="row justify-content-center">
-            <div class="col-md-12">
-              <div class="form-block">
-                  <div class="mb-4">
-                      <h1>Welcome Mr. Django </h1>
-                  </div>
-                  <label>Log in if you already have registered!</label>
-                  <div class="form-group last mb-4">
-                      <div><button class="btn btn-pill text-white btn-block btn-primary"><a href="{% url 'login_view' %}">login</a></button></div>
-                  </div>
-                  <label>If not register here!</label>
-                  <div class="form-group last mb-4">
-                      <div><button class="btn btn-pill text-white btn-block btn-primary"><a href="{% url 'registerorg' %}">register organizer</a></button></div>
-                      <div><button class="btn btn-pill text-white btn-block btn-primary"><a href="{% url 'registercli' %}">register client</a></button></div>
-                  </div>
+      <div class="row justify-content-between gy-5">
+        <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center align-items-center align-items-lg-start text-center text-lg-start">
+          <h2 data-aos="fade-up">Enjoy Your Time<br>Amazing Events</h2>
+          <p data-aos="fade-up" data-aos-delay="100">Welcome to Eventino, where unforgettable experiences begin and extraordinary moments come to life. Explore, book, and immerse yourself in the world of live events like never before</p>
+          <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
+            <a href="{% url 'events:event_listing' %}" class="btn-book-a-table">Discover our events</a>
+            <a href="https://www.youtube.com/watch?v=hZDJjSHHGok&pp=ygUUbXVzaWMgZXZlbnRzIHRyYWlsZXI%3D" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
+          </div>
+        </div>
+        <div class="col-lg-5 order-1 order-lg-2 text-center text-lg-start">
+          <img src="../../static/images/img_1.png" width="500" height="350" class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="300">
+        </div>
+      </div>
+    </div>
+  </section><!-- End Hero Section -->
+  
+  <main id="main">
 
-                  <form action="{% url 'event_search' %}" method="get">
-                    <input type="text" name="q" placeholder="Search events">
-                    <button type="submit">Search</button>
-                  </form>
-                  {% if query %}
-                    <h2>Search results for "{{ query }}"</h2>
-                    {% if events %}
-                      <ul>
-                        {% for event in events %}
-                          <li>{{ event.name }}</li>
-                        {% endfor %}
-                      </ul>
-                    {% else %}
-                      <p>No events found.</p>
-                    {% endif %}
-                  {% endif %}
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
+      <div class="container" data-aos="fade-up">
 
-                  <div>
-                    <form action="{% url 'search_events' %}" method="GET">
-                      <select name="category_id">
-                        <option value="">All Categories</option>
-                        {% for category in categories %}
-                          <option value="{{ category.category_id }}">{{ category.name }}</option>
-                        {% endfor %}
-                      </select>
-                      <button type="submit">Search</button>
-                    </form>
-                    
-                    <div id="search-results">
-                      {% for event in eventsc %}
-                        <div class="event">
-                          <h3>{{ event.name }}</h3>
-                          <p>Description: {{ event.description }}</p>
-                          <p>Start DateTime: {{ event.start_datetime }}</p>
-                          <p>End DateTime: {{ event.end_datetime }}</p>
-                          <p>Location: {{ event.location }}</p>
-                          <p>Price: {{ event.price }}</p>
-                        </div>
-                      {% empty %}
-                        <p>No events found.</p>
-                      {% endfor %}
-                    </div>
-                  </div>
+        <div class="section-header">
+          <h2>About Us</h2>
+          <p>Learn More <span>About Us</span></p>
+        </div>
+
+        <div class="row gy-4">
+          <div class="col-lg-7 position-relative about-img" style="background-image: url(../../static/images/img_5.png) ;" data-aos="fade-up" data-aos-delay="100">
+
+          </div>
+          <div class="col-lg-5 d-flex align-items-end" data-aos="fade-up" data-aos-delay="300">
+            <div class="content ps-0 ps-lg-5">
+              <p class="fst-italic">
+                Welcome to Eventino, your one-stop destination for booking event tickets and unlocking unforgettable experiences! We are passionate about connecting you with the best events, concerts, sports matches, theater performances, and more. <br>With our user-friendly platform, we strive to make the ticket booking process seamless and enjoyable, ensuring you have a hassle-free experience from start to finish.
+              </p>
+              <ul>
+                <li><i class="bi bi-check2-all"></i> Concerts: Experience the magic of live music with concerts featuring renowned artists across various genres, including rock, pop, hip-hop, classical, jazz, and more.</li>
+                <li><i class="bi bi-check2-all"></i> Sports Matches: Catch the excitement of sports events, including football, basketball, baseball, soccer, tennis, rugby, and other thrilling athletic competitions.</li>
+                <li><i class="bi bi-check2-all"></i> Theater Performances: Immerse yourself in the world of drama, comedy, and musical theater with captivating performances by talented actors and actresses.</li>
+                <li><i class="bi bi-check2-all"></i> Festivals: Celebrate cultural diversity and artistic expressions at music festivals, film festivals, food festivals, and other vibrant gatherings.</li>
+                <li><i class="bi bi-check2-all"></i> Comedy Shows: Laugh out loud at stand-up comedy gigs where talented comedians tickle your funny bone with their wit and humor.</li>
+                <li><i class="bi bi-check2-all"></i> Exhibitions and Art Shows: Explore the world of art, photography, sculpture, and installations at exhibitions that showcase the works of established and emerging artists.</li>
+
+              </ul>
+
+              <div class="position-relative mt-4">
+                <img src="../../static/images/img_4.png" class="img-fluid" alt="">
+                <a href="https://www.youtube.com/watch?v=hZDJjSHHGok&pp=ygUUbXVzaWMgZXZlbnRzIHRyYWlsZXI%3D" class="glightbox play-btn"></a>
               </div>
             </div>
           </div>
         </div>
 
       </div>
-    </div>
-  </div>
+    </section><!-- End About Section -->
 
 
-    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
+    <!-- ======= Menu Section ======= -->
+    <section id="categories" class="menu">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <h2>Our Categories</h2>
+          <p>Check Our <span>Categories</span></p>
+        </div>
+
+        <ul class="nav nav-tabs d-flex justify-content-center" data-aos="fade-up" data-aos-delay="200">
+
+          <li class="nav-item">
+            <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#menu-starters">
+              <h4>Music Events</h4>
+            </a>
+          </li><!-- End tab nav item -->
+
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-breakfast">
+              <h4>Sports Events</h4>
+            </a><!-- End tab nav item -->
+
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-dinner">
+              <h4>Performing Arts</h4>
+            </a>
+          </li><!-- End tab nav item -->
+
+        </ul>
+
+        <div class="tab-content" data-aos="fade-up" data-aos-delay="300">
+
+          <div class="tab-pane fade active show" id="menu-starters">
+
+            <div class="tab-header text-center">
+              <h3>Music</h3>
+            </div>
+
+            <div class="row gy-5">
+
+              <div class="col-lg-4 menu-item">
+                <a href="../../static/images/menu/event_music_1.png"  class="glightbox"><img src="../../static/images/menu/event_music_1.png" class="menu-img img-fluid" alt=""></a>
+                <h4>VENI VIDI VIBE EVENT</h4>
+
+                <p class="price">
+                  250 MAD
+                </p>
+              </div><!-- Menu Item -->
+
+              <div class="col-lg-4 menu-item">
+                <a href="../../static/images/menu/img.png" class="glightbox"><img src="../../static/images/menu/img.png" class="menu-img img-fluid" alt=""></a>
+                <h4>The Heightened Connection</h4>
+                <p class="price">
+                  220 MAD
+                </p>
+              </div><!-- Menu Item -->
+
+              <div class="col-lg-4 menu-item">
+                <a href="../../static/images/menu/img_1.png" class="glightbox"><img src="../../static/images/menu/img_1.png" class="menu-img img-fluid" alt=""></a>
+                <h4>Jazzablanca Festival</h4>
+                <p class="price">
+                  590 MAD
+                </p>
+              </div><!-- Menu Item -->
+
+              <div class="col-lg-4 menu-item">
+                <a href="../../static/images/menu/img_2.png" class="glightbox"><img src="../../static/images/menu/img_2.png" class="menu-img img-fluid" alt=""></a>
+                <h4>BEFORE FESTIVAL BY TARTAR</h4>
+                <p class="price">
+                  350 MAD
+                </p>
+              </div><!-- Menu Item -->
+            </div>
+          </div><!-- End Starter Menu Content -->
+
+          <div class="tab-pane fade" id="menu-breakfast">
+
+            <div class="tab-header text-center">
+              <h3>Sport</h3>
+            </div>
+
+            <div class="row gy-5">
+
+              <div class="col-lg-4 menu-item">
+                <a href="../../static/images/menu/img_3.png" class="glightbox"><img src="../../static/images/menu/img_3.png" class="menu-img img-fluid" alt=""></a>
+                <h4>Kayaking</h4>
+                <p class="price">
+                  350 MAD
+                </p>
+              </div><!-- Menu Item -->
+
+              <div class="col-lg-4 menu-item">
+                <a href="../../static/images/menu/img_4.png" class="glightbox"><img src="../../static/images/menu/img_4.png" class="menu-img img-fluid" alt=""></a>
+                <h4>Skiing</h4>
+                <p class="price">
+                  500 MAD
+                </p>
+              </div><!-- Menu Item -->
+
+              <div class="col-lg-4 menu-item">
+                <a href="../../static/images/menu/img_5.png" class="glightbox"><img src="../../static/images/menu/img_5.png" class="menu-img img-fluid" alt=""></a>
+                <h4>Surfing</h4>
+                <p class="price">
+                  380 MAD
+                </p>
+              </div><!-- Menu Item -->
+
+              <div class="col-lg-4 menu-item">
+                <a href="../../static/images/menu/img_6.png" class="glightbox"><img src="../../static/images/menu/img_6.png" class="menu-img img-fluid" alt=""></a>
+                <h4>Snorkeling</h4>
+                <p class="price">
+                  290 MAD
+                </p>
+              </div><!-- Menu Item -->
+
+              <div class="col-lg-4 menu-item">
+                <a href="../../static/images/menu/img_7.png" class="glightbox"><img src="../../static/images/menu/img_7.png" class="menu-img img-fluid" alt=""></a>
+                <h4>Aerobics</h4>
+                <p class="price">
+                  275 MAD
+                </p>
+              </div><!-- Menu Item -->
+
+            </div>
+          </div><!-- End Breakfast Menu Content -->
+
+          <div class="tab-pane fade" id="menu-dinner">
+
+            <div class="tab-header text-center">
+              <h3>Arts</h3>
+            </div>
+
+            <div class="row gy-5">
+
+              <div class="col-lg-4 menu-item">
+                <a href="../../static/images/menu/img_8.png" class="glightbox"><img src="../../static/images/menu/img_8.png" class="menu-img img-fluid" alt=""></a>
+                <h4>Maintenant ou Jamel !</h4>
+                <p class="price">
+                  250 MAD
+                </p>
+              </div><!-- Menu Item -->
+
+              <div class="col-lg-4 menu-item">
+                <a href="../../static/images/menu/img_9.png" class="glightbox"><img src="../../static/images/menu/img_9.png" class="menu-img img-fluid" alt=""></a>
+                <h4>Humouraji Casablanca</h4>
+                <p class="price">
+                  170 MAD
+                </p>
+              </div><!-- Menu Item -->
+
+              <div class="col-lg-4 menu-item">
+                <a href="../../static/images/menu/img_10.png" class="glightbox"><img src="../../static/images/menu/img_10.png" class="menu-img img-fluid" alt=""></a>
+                <h4>Jalil Tijani « Jeux de société »</h4>
+                <p class="price">
+                  150 MAD
+                </p>
+              </div><!-- Menu Item -->
+
+              <div class="col-lg-4 menu-item">
+                <a href="../../static/images/menu/img_11.png" class="glightbox"><img src="../../static/images/menu/img_11.png" class="menu-img img-fluid" alt=""></a>
+                <h4>KEV ADAMS - SOIS 10 ANS</h4>
+
+                <p class="price">
+                  200 MAD
+                </p>
+              </div><!-- Menu Item -->
+
+            </div>
+          </div><!-- End Dinner Menu Content -->
+
+        </div>
+
+      </div>
+    </section><!-- End Menu Section -->
+
+    <!-- ======= Events Section ======= -->
+    <section id="events" class="events">
+      <div class="container-fluid" data-aos="fade-up">
+
+        <div class="section-header">
+          <h2>Events</h2>
+          <p>Share <span>Your Moments</span> In Our Events</p>
+        </div>
+
+        <div class="slides-3 swiper" data-aos="fade-up" data-aos-delay="100">
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide event-item d-flex flex-column justify-content-end" style="background-image: url(../../static/images/menu/img_8.png)">
+              <h3>Art</h3>
+              <div class="price align-self-start">250 MAD</div>
+              <p class="description">
+                Quo corporis voluptas ea ad. Consectetur inventore sapiente ipsum voluptas eos omnis facere. Enim facilis veritatis id est rem repudiandae nulla expedita quas.
+              </p>
+            </div><!-- End Event item -->
+
+            <div class="swiper-slide event-item d-flex flex-column justify-content-end" style="background-image: url(../../static/images/menu/img_2.png)">
+              <h3>Private Partie</h3>
+              <div class="price align-self-start">300 MAD</div>
+              <p class="description">
+                In delectus sint qui et enim. Et ab repudiandae inventore quaerat doloribus. Facere nemo vero est ut dolores ea assumenda et. Delectus saepe accusamus aspernatur.
+              </p>
+            </div><!-- End Event item -->
+
+            <div class="swiper-slide event-item d-flex flex-column justify-content-end" style="background-image: url(../../static/images/menu/img_6.png)">
+              <h3>Sport</h3>
+              <div class="price align-self-start">500 MAD</div>
+              <p class="description">
+                Laborum aperiam atque omnis minus omnis est qui assumenda quos. Quis id sit quibusdam. Esse quisquam ducimus officia ipsum ut quibusdam maxime. Non enim perspiciatis.
+              </p>
+            </div><!-- End Event item -->
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+    </section><!-- End Events Section -->
+
+
+    <!-- ======= Gallery Section ======= -->
+    <section id="gallery" class="gallery section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-header">
+          <h2>gallery</h2>
+          <p>Check <span>Our Gallery</span></p>
+        </div>
+
+        <div class="gallery-slider swiper">
+          <div class="swiper-wrapper align-items-center">
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="../../static/images/gallery/gallery-1.jpg"><img src="../../static/images/gallery/gallery-1.jpg" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="../../static/images/gallery/gallery-2.jpg"><img src="../../static/images/gallery/gallery-2.jpg" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="../../static/images/gallery/gallery-3.jpg"><img src="../../static/images/gallery/gallery-3.jpg" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="../../static/images/gallery/gallery-4.jpg"><img src="../../static/images/gallery/gallery-4.jpg" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="../../static/images/gallery/gallery-5.jpg"><img src="../../static/images/gallery/gallery-5.jpg" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="../../static/images/gallery/gallery-6.jpg"><img src="../../static/images/gallery/gallery-6.jpg" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="../../static/images/gallery/gallery-7.jpg"><img src="../../static/images/gallery/gallery-7.jpg" class="img-fluid" alt=""></a></div>
+            <div class="swiper-slide"><a class="glightbox" data-gallery="images-gallery" href="../../static/images/gallery/gallery-8.jpg"><img src="../../static/images/gallery/gallery-8.jpg" class="img-fluid" alt=""></a></div>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+    </section><!-- End Gallery Section -->
+
+
+  </main><!-- End #main -->
+  {% include 'footer.html' %}
+    <!-- Vendor JS Files -->
+    <script src="../../static/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../static/vendors/aos/aos.js"></script>
+    <script src="../../static/vendors/glightbox/js/glightbox.min.js"></script>
+    <script src="../../static/vendors/purecounter/purecounter_vanilla.js"></script>
+    <script src="../../static/vendors/swiper/swiper-bundle.min.js"></script>
+    <script src="../../static/vendors/php-email-form/validate.js"></script>
+  
+    <!-- Template Main JS File -->
+    <script src="../../static/js/main.js"></script>
   </body>
 </html>

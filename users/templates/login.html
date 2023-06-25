@@ -11,12 +11,16 @@
     <link rel="stylesheet" href="../../static/vendors/bootstrap-icons/bootstrap-icons.css">
     <link rel="stylesheet" href="../../static/css/app.css">
     <link rel="stylesheet" href="../../static/css/pages/auth.css">
+    <link href="../../static/css/main.css" rel="stylesheet">
 </head>
 
 <body>
+    {% include 'header_component.html' %}
     <div id="auth">
 
-        <div class="row h-100">
+        <div class="row h-100" style="
+        margin-top: 50px;
+    ">
             <div class="col-lg-5 col-12">
                 <div id="auth-left">
                     <div class="auth-logo">
@@ -79,6 +83,7 @@
         </div>
 
     </div>
+    <!-- <script src="../../static/js/main.js"></script> -->
 </body>
 
 </html>

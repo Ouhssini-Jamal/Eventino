@@ -1,27 +1,222 @@
-<h1>Event Detail</h1>
-<p>Name: {{ event.name }}</p>
-<p>Description: {{ event.description }}</p>
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  
+    <title>Eventino Home Page</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+  
+    <!-- Favicons -->
+    <link href="../../static/images/favicon.png" rel="icon">
+    <link href="../../static/images/apple-touch-icon.png" rel="apple-touch-icon">
+  
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Amatic+SC:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+  
+    <!-- vendors CSS Files -->
+    <link href="../../static/vendors/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../static/vendors/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../../static/vendors/aos/aos.css" rel="stylesheet">
+    <link href="../../static/vendors/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="../../static/vendors/swiper/swiper-bundle.min.css" rel="stylesheet">
+  
+    <!-- Template Main CSS File -->
+    <link href="../../static/css/main.css" rel="stylesheet">
 
-<form method="post" action="{% url 'bookings:event_booking' event_id=event.event_id %}">
-    {% csrf_token %}
+    <title>Multiple user login</title>
+    <style>
+        .text-bold {
+          font-weight: 800;
+        }
     
-    <!-- Add quantity fields for each ticket type -->
-    <label for="standard_quantity">Standard Quantity:</label>
-    <input type="number" name="standard_quantity" id="standard_quantity" min="0" required>
-    <br>
-    <label for="mid_quantity">Mid Quantity:</label>
-    <input type="number" name="mid_quantity" id="mid_quantity" min="0" required>
-    <br>
+        text-color {
+          color: #0093c4;
+        }
     
-    <label for="vip_quantity">VIP Quantity:</label>
-    <input type="number" name="vip_quantity" id="vip_quantity" min="0" required>
-    <br>
+        /* Main image - left */
+        .main-img img {
+          width: 100%;
+        }
     
-    <input type="submit" value="Book Event">
-    <br>
-    {% if msg %}
-    <p>{{ msg }}</p>
-    {% endif %}
+        /* Preview images */
+        .previews img {
+          width: 100%;
+          height: 140px;
+        }
+    
+        .main-description .category {
+          text-transform: uppercase;
+          color: #0093c4;
+        }
+    
+        .main-description .product-title {
+          font-size: 2.5rem;
+        }
+    
+        .old-price-discount {
+          font-weight: 600;
+        }
+    
+        .new-price {
+          font-size: 2rem;
+        }
+    
+        .details-title {
+          text-transform: uppercase;
+          font-weight: 600;
+          font-size: 1.2rem;
+          color: #757575;
+        }
+    
+        .buttons .block {
+          margin-right: 5px;
+        }
+    
+        .quantity input {
+          border-radius: 0;
+          height: 40px;
+    
+        }
+    
+    
+        .custom-btn {
+          text-transform: capitalize;
+          background-color: #0093c4;
+          color: white;
+          width: 150px;
+          height: 40px;
+          border-radius: 0;
+        }
+    
+        .custom-btn:hover {
+          background-color: #0093c4 !important;
+          font-size: 18px;
+          color: white !important;
+        }
+    
+        .similar-product img {
+          height: 400px;
+        }
+    
+        .similar-product {
+          text-align: left;
+        }
+    
+        .similar-product .title {
+          margin: 17px 0px 4px 0px;
+        }
+    
+        .similar-product .price {
+          font-weight: bold;
+        }
+    
+    
+        /* Small devices (landscape phones, less than 768px) */
+        @media (max-width: 767.98px) {
+    
+          /* Make preview images responsive  */
+          .previews img {
+            width: 100%;
+            height: auto;
+          }
+    
+        }
+      </style>
+    
+  </head>
+  <body>
+    {% include 'header_component.html' %}
+    <main id="main">
 
-</form>
-<a href="{% url 'bookings:show_bookings' event_id=event.event_id %}">show bookings</a> 
+        <!-- ======= Breadcrumbs ======= -->
+        <div class="breadcrumbs">
+    
+    
+          <div class="container">
+            <div class="mb-lg-5">
+            <ol>
+              <li><a href="index.html">Home</a></li>
+              <li>Events</li>
+            </ol>
+          </div>
+          <section class="sample-page">
+            <div class="container" data-aos="fade-up">
+              <div class="container mt-5 mb-5">
+                <div class="d-flex justify-content-center row">
+                  <div class="col-md-5">
+                    <div class="main-img">
+                      <img class="img-fluid" src="{{ event.image.url }}" alt="Event">
+                    </div>
+                  </div>
+                  <div class="col-md-7">
+                    <div class="main-description px-2">
+                      <div class="category text-bold text-danger">
+                        Category: {{ event.categories.first.name }}
+                      </div>
+                      <div class="product-title text-bold my-3">
+                        {{ event.name }}
+                      </div>
+          
+                      <div class="price-area my-4">
+                        {% if event.standard %}
+                        <p class="new-price text-bold mb-1">Standard: {{ event.standard }} MAD</p>
+                        {% endif %}
+                        {% if event.mid %}
+                        <p class="new-price text-bold mb-1">Mid: {{ event.mid }} MAD</p>
+                        {% endif %}
+                        {% if event.vip %}
+                        <p class="new-price text-bold mb-1">VIP: {{ event.vip }} MAD</p>
+                        {% endif %}
+                        <p class="text-secondary mb-1">(Additional tax may apply on checkout)</p>
+                      </div>
+          
+                      <div class="buttons d-flex my-5">
+                        <div class="block">
+                          <a href="#" class="shadow btn btn-danger">Book</a>
+                        </div>
+                        <div class="block">
+                          <button class="shadow btn btn-danger">Add to cart</button>
+                        </div>
+          
+                        <div class="block quantity">
+                          <input type="number" class="form-control" id="cart_quantity" value="1" min="0" max="5" placeholder="Enter email" name="cart_quantity">
+                        </div>
+                      </div>
+                    </div>
+          
+                    <div class="product-details my-4">
+                      <p class="details-title text-color mb-1">Event Details</p>
+                      <p class="description">{{ event.description }}</p>
+                    </div>
+                    <div class="product-details my-4">
+                      <p class="details-title text-color mb-2">Location</p>
+                      <ul>
+                        <li>{{ event.location }}</li>
+                      </ul>
+                    </div>
+          
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+    
+      </main><!-- End #main -->
+      {% include 'footer.html' %}
+      <!-- Vendor JS Files -->
+      <script src="../../static/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="../../static/vendors/aos/aos.js"></script>
+      <script src="../../static/vendors/glightbox/js/glightbox.min.js"></script>
+      <script src="../../static/vendors/purecounter/purecounter_vanilla.js"></script>
+      <script src="../../static/vendors/swiper/swiper-bundle.min.js"></script>
+      <script src="../../static/vendors/php-email-form/validate.js"></script>
+    
+      <!-- Template Main JS File -->
+      <script src="../../static/js/main.js"></script>
+    </body>
+  </html>    

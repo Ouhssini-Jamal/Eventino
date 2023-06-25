@@ -75,3 +75,8 @@ def event_detail(request, event_id):
     event = get_object_or_404(Event, event_id=event_id)
     return render(request, 'event_detail.html', {'event': event})
  
+def event_listing(request) :
+    context = {
+         'categories' : Category.objects.all(),
+     }
+    return render(request,'event_listing.html',context)

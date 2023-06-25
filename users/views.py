@@ -125,36 +125,45 @@ def index(request):
      context = {'categories': categories}
      return render(request,'index.html',context)
 
-def event_search(request):
-    query = request.GET.get('q', '')  # Get the search query from the request GET parameters
-    events = Event.objects.filter(
-        Q(name__icontains=query) |        # Search by event name (case-insensitive)
-        Q(location__icontains=query) |   # Search by city (case-insensitive)
-        Q(categories__name__icontains=query)   # Search by category name (case-insensitive)
-    ).filter(status="confirmed").distinct()
-    context = {
-        'query': query,
-        'events': events,
-        'categories' : Category.objects.all(),
-    }
-
-    return render(request, 'index.html', context)
+# def event_search(request):
+#     query = request.GET.get('EventName', '')  # Get the search query from the request GET parameters
+#     events = Event.objects.filter(
+#         Q(name__icontains=query) |        # Search by event name (case-insensitive)
+#         Q(location__icontains=query)   # Search by city (case-insensitive)
+#     ).filter(status="confirmed").distinct()
+#     context = {
+#         'query': query,
+#         'events': events,
+#         'categories' : Category.objects.all(),
+#     }
 
 def search_events(request):
-    if request.method == 'GET':
-        category_id = request.GET.get('category_id')
-        try:
-            category = Category.objects.get(category_id=category_id)
-            events = category.event_set.filter(status='confirmed')
-            # dd(events)
-        except Category.DoesNotExist:
-            events = Event.objects.all()
-    else:
-        events = Event.objects.all()
+    query = request.GET.get('EventName', '')  # Get the search query from the request GET parameters
+    events = Event.objects.all()
+    if query :
+        events = events.filter(
+            Q(name__icontains=query) |        # Search by event name (case-insensitive)
+            Q(location__icontains=query)   # Search by city (case-insensitive)
+        ).filter(status="confirmed").distinct()
+    category_id = request.GET.get('category')
+    if category_id:
+        category = Category.objects.get(category_id=category_id)
+        events = events.filter(categories=category, status='confirmed')
+    Date = request.GET.get('Date')
 
+    if Date : 
+        events = events.filter(start_datetime__date=Date)
+    
+    Price = request.GET.get('Price')
+    if Price:
+        events = events.filter(standard__lte=Price, status='confirmed')
+        
     categories = Category.objects.all()
-    context = {'categories': categories, 'eventsc': events}
-    return render(request, 'index.html', context)
+    context = {
+        'categories' :categories,
+        'events': events,
+    }
+    return render(request,'event_listing.html',context)
 
 def manage_clients(request):
     clients = Client.objects.all()

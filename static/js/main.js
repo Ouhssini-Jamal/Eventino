@@ -1,51 +1,243 @@
-function slideToggle(t,e,o){0===t.clientHeight?j(t,e,o,!0):j(t,e,o)}function slideUp(t,e,o){j(t,e,o)}function slideDown(t,e,o){j(t,e,o,!0)}function j(t,e,o,i){void 0===e&&(e=400),void 0===i&&(i=!1),t.style.overflow="hidden",i&&(t.style.display="block");var p,l=window.getComputedStyle(t),n=parseFloat(l.getPropertyValue("height")),a=parseFloat(l.getPropertyValue("padding-top")),s=parseFloat(l.getPropertyValue("padding-bottom")),r=parseFloat(l.getPropertyValue("margin-top")),d=parseFloat(l.getPropertyValue("margin-bottom")),g=n/e,y=a/e,m=s/e,u=r/e,h=d/e;window.requestAnimationFrame(function l(x){void 0===p&&(p=x);var f=x-p;i?(t.style.height=g*f+"px",t.style.paddingTop=y*f+"px",t.style.paddingBottom=m*f+"px",t.style.marginTop=u*f+"px",t.style.marginBottom=h*f+"px"):(t.style.height=n-g*f+"px",t.style.paddingTop=a-y*f+"px",t.style.paddingBottom=s-m*f+"px",t.style.marginTop=r-u*f+"px",t.style.marginBottom=d-h*f+"px"),f>=e?(t.style.height="",t.style.paddingTop="",t.style.paddingBottom="",t.style.marginTop="",t.style.marginBottom="",t.style.overflow="",i||(t.style.display="none"),"function"==typeof o&&o()):window.requestAnimationFrame(l)})}
+/**
+* Template Name: Yummy
+* Updated: May 30 2023 with Bootstrap v5.3.0
+* Template URL: https://bootstrapmade.com/yummy-bootstrap-restaurant-website-template/
+* Author: BootstrapMade.com
+* License: https://bootstrapmade.com/license/
+*/
+document.addEventListener('DOMContentLoaded', () => {
+  "use strict";
 
-let sidebarItems = document.querySelectorAll('.sidebar-item.has-sub');
-for(var i = 0; i < sidebarItems.length; i++) {
-    let sidebarItem = sidebarItems[i];
-	sidebarItems[i].querySelector('.sidebar-link').addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        let submenu = sidebarItem.querySelector('.submenu');
-        if( submenu.classList.contains('active') ) submenu.style.display = "block"
-
-        if( submenu.style.display == "none" ) submenu.classList.add('active')
-        else submenu.classList.remove('active')
-        slideToggle(submenu, 300)
-    })
-}
-
-window.addEventListener('DOMContentLoaded', (event) => {
-    var w = window.innerWidth;
-    if(w < 1200) {
-        document.getElementById('sidebar').classList.remove('active');
-    }
-});
-window.addEventListener('resize', (event) => {
-    var w = window.innerWidth;
-    if(w < 1200) {
-        document.getElementById('sidebar').classList.remove('active');
-    }else{
-        document.getElementById('sidebar').classList.add('active');
-    }
-});
-
-document.querySelector('.burger-btn').addEventListener('click', () => {
-    document.getElementById('sidebar').classList.toggle('active');
-})
-document.querySelector('.sidebar-hide').addEventListener('click', () => {
-    document.getElementById('sidebar').classList.toggle('active');
-
-})
-
-
-// Perfect Scrollbar Init
-if(typeof PerfectScrollbar == 'function') {
-    const container = document.querySelector(".sidebar-wrapper");
-    const ps = new PerfectScrollbar(container, {
-        wheelPropagation: false
+  /**
+   * Preloader
+   */
+  const preloader = document.querySelector('#preloader');
+  if (preloader) {
+    window.addEventListener('load', () => {
+      preloader.remove();
     });
-}
+  }
 
-// Scroll into active sidebar
-document.querySelector('.sidebar-item.active').scrollIntoView(false)
+  /**
+   * Sticky header on scroll
+   */
+  const selectHeader = document.querySelector('#header');
+  if (selectHeader) {
+    document.addEventListener('scroll', () => {
+      window.scrollY > 100 ? selectHeader.classList.add('sticked') : selectHeader.classList.remove('sticked');
+    });
+  }
+
+  /**
+   * Navbar links active state on scroll
+   */
+  let navbarlinks = document.querySelectorAll('#navbar a');
+
+  function navbarlinksActive() {
+    navbarlinks.forEach(navbarlink => {
+
+      if (!navbarlink.hash) return;
+
+      let section = document.querySelector(navbarlink.hash);
+      if (!section) return;
+
+      let position = window.scrollY + 200;
+
+      if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
+        navbarlink.classList.add('active');
+      } else {
+        navbarlink.classList.remove('active');
+      }
+    })
+  }
+  window.addEventListener('load', navbarlinksActive);
+  document.addEventListener('scroll', navbarlinksActive);
+
+  /**
+   * Mobile nav toggle
+   */
+  const mobileNavShow = document.querySelector('.mobile-nav-show');
+  const mobileNavHide = document.querySelector('.mobile-nav-hide');
+
+  document.querySelectorAll('.mobile-nav-toggle').forEach(el => {
+    el.addEventListener('click', function(event) {
+      event.preventDefault();
+      mobileNavToogle();
+    })
+  });
+
+  function mobileNavToogle() {
+    document.querySelector('body').classList.toggle('mobile-nav-active');
+    mobileNavShow.classList.toggle('d-none');
+    mobileNavHide.classList.toggle('d-none');
+  }
+
+  /**
+   * Hide mobile nav on same-page/hash links
+   */
+  document.querySelectorAll('#navbar a').forEach(navbarlink => {
+
+    if (!navbarlink.hash) return;
+
+    let section = document.querySelector(navbarlink.hash);
+    if (!section) return;
+
+    navbarlink.addEventListener('click', () => {
+      if (document.querySelector('.mobile-nav-active')) {
+        mobileNavToogle();
+      }
+    });
+
+  });
+
+  /**
+   * Toggle mobile nav dropdowns
+   */
+  const navDropdowns = document.querySelectorAll('.navbar .dropdown > a');
+
+  navDropdowns.forEach(el => {
+    el.addEventListener('click', function(event) {
+      if (document.querySelector('.mobile-nav-active')) {
+        event.preventDefault();
+        this.classList.toggle('active');
+        this.nextElementSibling.classList.toggle('dropdown-active');
+
+        let dropDownIndicator = this.querySelector('.dropdown-indicator');
+        dropDownIndicator.classList.toggle('bi-chevron-up');
+        dropDownIndicator.classList.toggle('bi-chevron-down');
+      }
+    })
+  });
+
+  /**
+   * Scroll top button
+   */
+  const scrollTop = document.querySelector('.scroll-top');
+  if (scrollTop) {
+    const togglescrollTop = function() {
+      window.scrollY > 100 ? scrollTop.classList.add('active') : scrollTop.classList.remove('active');
+    }
+    window.addEventListener('load', togglescrollTop);
+    document.addEventListener('scroll', togglescrollTop);
+    scrollTop.addEventListener('click', window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    }));
+  }
+
+  /**
+   * Initiate glightbox
+   */
+  const glightbox = GLightbox({
+    selector: '.glightbox'
+  });
+
+  /**
+   * Initiate pURE cOUNTER
+   */
+  new PureCounter();
+
+  /**
+   * Init swiper slider with 1 slide at once in desktop view
+   */
+  new Swiper('.slides-1', {
+    speed: 600,
+    loop: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false
+    },
+    slidesPerView: 'auto',
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets',
+      clickable: true
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    }
+  });
+
+  /**
+   * Init swiper slider with 3 slides at once in desktop view
+   */
+  new Swiper('.slides-3', {
+    speed: 600,
+    loop: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false
+    },
+    slidesPerView: 'auto',
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets',
+      clickable: true
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 40
+      },
+
+      1200: {
+        slidesPerView: 3,
+      }
+    }
+  });
+
+  /**
+   * Gallery Slider
+   */
+  new Swiper('.gallery-slider', {
+    speed: 400,
+    loop: true,
+    centeredSlides: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false
+    },
+    slidesPerView: 'auto',
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets',
+      clickable: true
+    },
+    breakpoints: {
+      320: {
+        slidesPerView: 1,
+        spaceBetween: 20
+      },
+      640: {
+        slidesPerView: 3,
+        spaceBetween: 20
+      },
+      992: {
+        slidesPerView: 5,
+        spaceBetween: 20
+      }
+    }
+  });
+
+  /**
+   * Animation on scroll function and init
+   */
+  function aos_init() {
+    AOS.init({
+      duration: 1000,
+      easing: 'ease-in-out',
+      once: true,
+      mirror: false
+    });
+  }
+  window.addEventListener('load', () => {
+    aos_init();
+  });
+
+});
+
