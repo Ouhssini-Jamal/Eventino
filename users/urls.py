@@ -20,7 +20,7 @@ path('validate_organizer/<int:id>/', login_required(views.validate_organizer), n
 path('profile/admin/', login_required(views.admin_profile), name='admin_profile'),
 path('organizer/profile/', login_required(views.organizer_profile), name='organizer_profile'),
 path('client/profile/',login_required(views.client_profile), name='client_profile'),
-
+ path('organizer/deactivate/<int:organizer_id>/', login_required(views.deactivate_organizer), name='deactivate_organizer'),
 
 ]
 

@@ -15,8 +15,14 @@
           <li><a href="#categories">Categories</a></li>
           <li><a href="{% url 'events:event_listing' %}">Events</a></li>
           <li><a href="#gallery">Gallery</a></li>
-
-         <li class="dropdown"><span>Sign in</span> <i class="bi bi-chevron-down dropdown-indicator"></i>
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'dash' %}">Dashboard</a></li> 
+         <li><a href="{% url 'logout' %}" class='sidebar-link'>
+         
+          <span>Log Out</span>
+      </a></li> 
+          {% else %}
+         <li class="dropdown"><a href="#">Sign in</a></i>
             <ul>
               <li class="dropdown"><a href="#"><span>User</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                 <ul>
@@ -37,7 +43,7 @@
               </li>
             </ul>
           </li>
-
+          {% endif %}
           <!-- <li><a href="#contact">Contact</a></li> -->
         </ul>
       </nav><!-- .navbar -->

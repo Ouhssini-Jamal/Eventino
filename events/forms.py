@@ -15,7 +15,7 @@ class EventForm(forms.ModelForm):
 
     class Meta:
         model = Event
-        fields = ['name', 'description','start_datetime' ,'end_datetime' ,'quantity_left','standard','mid','vip','location', 'image']
+        fields = ['name', 'description','start_datetime' ,'end_datetime' ,'standard','mid','vip','standard_left','mid_left','vip_left','location', 'image']
 
     def clean_quantity_left(self):
         quantity_left = self.cleaned_data.get('quantity_left')
@@ -37,13 +37,21 @@ class EventUpdateForm(forms.ModelForm):
     end_datetime = forms.DateTimeField(required=False)
     location = forms.CharField(required=False)
     image = forms.ImageField(required=False)
+    standard = forms.DecimalField(required=False)
+    mid = forms.DecimalField(required=False)
+    vip = forms.DecimalField(required=False)
+    standard_left = forms.IntegerField(required=False)
+    mid_left = forms.IntegerField(required=False)
+    vip_left = forms.IntegerField(required=False)
     status_choices = [
-        ('pending', 'Pending'),
-        ('confirmed', 'Confirmed'),
+        ('finished', 'Finished'),
+        ('cancelled', 'Cancelled'),
     ]
     status = forms.TypedChoiceField(choices=status_choices, required=False)
     
     class Meta:
         model = Event
-        fields = ['name', 'description', 'start_datetime', 'end_datetime', 'location', 'image', 'standard','mid','vip','status']
+        fields = ['name', 'description', 'start_datetime', 'end_datetime', 'location', 'image', 'standard',
+                  'mid', 'vip', 'standard_left', 'mid_left', 'vip_left', 'status']
+
 

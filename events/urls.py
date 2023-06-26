@@ -10,7 +10,7 @@ urlpatterns = [
     path('admin', login_required(views.index2), name='manage_adm'),
     path('create/', login_required(views.create_event), name='create'),
     path('update/<int:event_id>/', login_required(views.update_event), name='update_event'),
-    path('<int:event_id>/', views.event_detail, name='event_detail'),
+     path('<int:event_id>/', views.event_detail, name='event_detail'),
     path('event/validate/<int:event_id>/', login_required(views.validate_event), name='validate_event'),
     path('', views.event_listing, name='event_listing'),
 ]

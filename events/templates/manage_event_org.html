@@ -27,66 +27,7 @@
 </head>
 <body>
   <div id="app">
-    <div id="sidebar" class="active">
-        <div class="sidebar-wrapper active">
-            <div class="sidebar-header">
-                <div class="d-flex justify-content-between">
-                    <div class="logo">
-                        <a href="{% url 'dash' %}"><img src="../../static/images/logo/logo.png" alt="Logo" srcset=""></a>
-                    </div>
-                    <div class="toggler">
-                        <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="sidebar-menu">
-                <ul class="menu">
-                    <li class="sidebar-title">Menu</li>
-
-                    <li class="sidebar-item active ">
-                        <a href="{% url 'dash' %}" class='sidebar-link'>
-                            <i class="bi bi-grid-fill"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-item  has-sub">
-                        <a href="#" class='sidebar-link'>
-                            <i class="bi bi-calendar3-event"></i>
-                            <span>Events</span>
-                        </a>
-                        <ul class="submenu ">
-                            <li class="submenu-item ">
-                                <a href="{% url 'events:manage_org' %}">Manage</a>
-                            </li>
-                            
-                        </ul>
-                    </li>
-                    <li class="sidebar-item  has-sub">
-                        <a href="#" class='sidebar-link'>
-                            <i class="bi bi-mailbox2"></i>
-                            <span>My profile</span>
-                        </a>
-                        <ul class="submenu ">
-                            <li class="submenu-item ">
-                              <a href="{% url 'organizer_profile' %}">Manage</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-item">
-                        <a href="{% url 'logout' %}" class='sidebar-link'>
-                            <i class="bi bi-box-arrow-right"></i>
-                            <span>Log Out</span>
-                        </a>
-                    </li>
-
-                    <!--<li class="sidebar-title">Forms &amp; Tables</li>-->
-
-                </ul>
-            </div>
-            <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
-        </div>
-    </div>
+    {% include 'org_sidebar.html' %}
     <div id="main">
       <header class="mb-3">
           <a href="#" class="burger-btn d-block d-xl-none">
@@ -149,13 +90,15 @@
                               <td>{{ event.start_datetime }}</td>
                               <td>{{ event.end_datetime }}</td>
                               <td>{{ event.location }}</td>
-                              <td>{{ event.quantity_left }}</td>
+                              <td><ul><li>Standard : price: {{ event.standard }} Dhs, Quantity: {{ event.standard_left }}.</li><li>Mid : price: {{ event.mid }} Dhs, Quantity: {{ event.mid_left }}.</li><li>VIP : price: {{ event.vip }} Dhs, Quantity: {{ event.vip_left }}.</li></ul></td>
                               <td><img src="/media/{{event.image}}" class="event-image" alt="Car Image" id="myImg" style="width: 50%; max-width: 150px; cursor:pointer;"></td>
                               <td>
                                 {% if event.status == 'confirmed' %}
                                   <span class="badge bg-success">Active</span>
                                 {%elif event.status == 'pending'%}
                                 <span class="badge bg-danger">Pending</span>
+                                {%elif event.status == 'finished'%}
+                                <span class="badge bg-success">Finished</span>
                                 {%else%}
                                 <span class="badge bg-danger">Cancelled</span>
                                {% endif %}

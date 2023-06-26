@@ -21,11 +21,15 @@ class Event(models.Model):
     image = models.ImageField(upload_to='event_images/')
     standard = models.DecimalField(null=True,max_digits=8, decimal_places=2)
     mid = models.DecimalField(null=True,max_digits=8, decimal_places=2) 
-    vip = models.DecimalField(null=True,max_digits=8, decimal_places=2)   # Add price field here
+    vip = models.DecimalField(null=True,max_digits=8, decimal_places=2)  
+    standard_left = models.PositiveIntegerField(null=True)
+    mid_left = models.PositiveIntegerField(null=True) 
+    vip_left = models.PositiveIntegerField(null=True) # Add price field here
     status_choices = [
         ('pending', 'Pending'),
         ('confirmed', 'Confirmed'),
         ('cancelled', 'Cancelled'),
+        ('finished', 'Finished'),
     ]
     status = models.CharField(max_length=50, choices=status_choices, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
@@ -48,6 +52,14 @@ class Event(models.Model):
                 total_price += ticket_price * quantity
 
         return total_price
+    def update_event_fields(event, fields):
+        for field_name, field_value in fields.items():
+            if hasattr(event, field_name):
+                setattr(event, field_name, field_value)
+        event.save()
+    # @property
+    # def msg():
+    #     return ""
     
 class EventCategory(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)

@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect,get_object_or_404
 from events.models import Event
 from .models import Booking,TicketBookingType
 from django.db.models import F
+from django.contrib import messages
 
 # Create your views here.
 def EventBooking(request,event_id) :
@@ -11,10 +12,17 @@ def EventBooking(request,event_id) :
                 'mid': int(request.POST.get('mid_quantity')),
                 'vip': int(request.POST.get('vip_quantity'))
             }
-    total_quantity = sum(quantities.values())
-    if total_quantity <= event.quantity_left:
+    if quantities['standard'] > event.standard_left or quantities['mid'] > event.mid_left or quantities['vip'] > event.vip_left :
+        messages.error(request, 'You have exceeded the number of tickets')
+        return redirect('events:event_detail', event_id=event.event_id)
+
+    else :
+            total_quantity = sum(quantities.values())
                 # Update the quantity_left field
             event.quantity_left = F('quantity_left') - total_quantity
+            event.standard_left -= quantities['standard']
+            event.standard_left -= quantities['mid'] 
+            quantities['vip'] -= event.vip_left 
             event.save()
             
             event = Event.objects.get(pk=event_id)
@@ -32,13 +40,7 @@ def EventBooking(request,event_id) :
                      ticket_type=ticket_type,
                     quantity=quantity
              )
-            return redirect('events:event_detail', event_id=event.event_id)
-    else :  
-        context ={
-            'msg' : 'vous avez depasser le nombres de tickets',
-            'event': event,
-        }
-        return render(request, 'event_detail.html', context)
+            return redirect('bookings:client_bookings')
     
 def show_bookings(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
@@ -65,3 +67,9 @@ def client_bookings(request):
 
     return render(request, 'manage_client_bookings.html', context)
 
+def validate_booking(request, booking_id):
+    booking = get_object_or_404(Booking, booking_id=booking_id)
+        # Update the booking status to 'confirmed'
+    booking.status = 'confirmed'
+    booking.save()
+    return redirect('bookings:show_bookings', event_id=booking.event.event_id)  # Replace with your success URL

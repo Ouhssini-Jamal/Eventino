@@ -8,99 +8,19 @@
     <title>Dashboard - Mazer Admin Dashboard</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'vendors/iconly/bold.css' %}">
-    <link rel="stylesheet" href="{% static 'vendors/perfect-scrollbar/perfect-scrollbar.css' %}">
-    <link rel="stylesheet" href="{% static 'vendors/bootstrap-icons/bootstrap-icons.css' %}">
-    <link rel="stylesheet" href="{% static 'css/app.css' %}">
-    <link rel="stylesheet" href="{% static 'css/pages/main.css' %}">
-    <link rel="shortcut icon" href="{% static 'images/favicon.svg' %}" type="image/x-icon">
+    <link rel="stylesheet" href="../../static/css/bootstrap.css">
+
+    <link rel="stylesheet" href="../../static/vendors/iconly/bold.css">
+
+    <link rel="stylesheet" href="../../static/vendors/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="../../static/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="../../static/css/app.css">
+    <link rel="shortcut icon" href="../static/images/favicon.svg" type="image/x-icon">
    
 </head>
 <body>
     <div id="app">
-        <div id="sidebar" class="active">
-            <div class="sidebar-wrapper active">
-                <div class="sidebar-header">
-                    <div class="d-flex justify-content-between">
-                        <div class="logo">
-                            <a href="/Dashboard"><img src="../../static/images/logo/logo.png" alt="Logo" srcset=""></a>
-                        </div>
-                        <div class="toggler">
-                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="sidebar-menu">
-                    <ul class="menu">
-                        <li class="sidebar-title">Menu</li>
-
-                        <li class="sidebar-item active ">
-                            <a href="/Dashboard" class='sidebar-link'>
-                                <i class="bi bi-grid-fill"></i>
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-calendar3-event"></i>
-                                <span>Events</span>
-                            </a>
-                            <ul class="submenu ">
-                                <li class="submenu-item ">
-                                    <a href="{% url 'events:manage_adm' %}">Manage</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="sidebar-item  has-sub">
-                            <a href="" class='sidebar-link'>
-                                <i class="bi bi-person"></i>
-                                <span>Organizers</span>
-                            </a>
-                            <ul class="submenu ">
-                                <li class="submenu-item ">
-                                    <a href="{% url 'manage_organizers' %}">Manage</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-person-plus-fill"></i>
-                                <span>Users</span>
-                            </a>
-                            <ul class="submenu ">
-                                <li class="submenu-item ">
-                                    <a href="{% url 'manage_clients' %}">Manage</a>
-                                </li>
-                            </ul>
-                        </li>
-                        
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i class="bi bi-person-badge"></i>
-                                <span>My profile</span>
-                            </a>
-                            <ul class="submenu ">
-                                <li class="submenu-item ">
-                                    <a href="#">Manage</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{% url 'logout' %}" class='sidebar-link'>
-                                <i class="bi bi-box-arrow-right"></i>
-                                <span>Log Out</span>
-                            </a>
-                        </li>
-
-                        <!--<li class="sidebar-title">Forms &amp; Tables</li>-->
-
-                    </ul>
-                </div>
-                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
-            </div>
-        </div>
+        {% include 'admin_sidebar.html' %}
         <div id="main">
           <header class="mb-3">
               <a href="#" class="burger-btn d-block d-xl-none">
@@ -152,7 +72,7 @@
                                 {% for event in events %}
                                 <tr>
                                     <td>{{ event.organizer }}</td>
-                                    <td>{{ event.name }}</td>
+                                    <td><a href="{%url 'events:event_detail' event_id=event.event_id%}">{{event.name}}</a></td>
                                     <td>
                                         {% for category in event.categories.all %}
                                             {{ category.name }}
@@ -169,6 +89,8 @@
                                         <span class="badge bg-success">Active</span>
                                       {%elif event.status == 'pending'%}
                                       <span class="badge bg-danger">Pending</span>
+                                      {%elif event.status == 'finished'%}
+                                      <span class="badge bg-success">Finished</span>
                                       {%else%}
                                       <span class="badge bg-danger">Cancelled</span>
                                      {% endif %}
@@ -212,12 +134,13 @@
 
 
 
-<script src="{% static 'vendors/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
-<!-- <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script> -->
-<script src="{% static 'vendors/simple-datatables/simple-datatables.js' %}"></script>
-<!-- <script src="{% static 'vendors/apexcharts/apexcharts.js' %}"></script> -->
-<!-- <script src="{% static 'js/pages/dashboard.js' %}"></script> -->
-<script src="{% static 'js/main.js' %}"></script>
+  <script src="../../static/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+  <script src="../../static/js/bootstrap.bundle.min.js"></script>
+  
+  <script src="../../static/vendors/apexcharts/apexcharts.js"></script>
+  <script src="../../static/js/pages/dashboard.js"></script>
+  
+  <script src="../../static/js/main/main.js"></script>
 
  <script>
    // Simple Datatable

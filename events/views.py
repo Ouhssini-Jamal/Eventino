@@ -9,7 +9,8 @@ def create_event(request):
         form = EventForm(request.POST, request.FILES)
         if form.is_valid():
             event = form.save(commit=False)
-            event.organizer_id = request.user.id  # Set the organizer_id to the current user's id
+            event.organizer_id = request.user.id  
+            event.quantity_left = event.standard_left + event.mid_left + event.vip_left 
             event.save()
             categories = form.cleaned_data['categories']  # Get the selected categories from the form
             for category in categories:
@@ -58,22 +59,24 @@ from django.shortcuts import render, get_object_or_404, redirect
 import logging
     
 def update_event(request, event_id):
-    event = Event.objects.get(pk=event_id)
+    event1 = Event.objects.get(pk=event_id)
+    event = Event()
     if request.method == 'POST':
         form = EventUpdateForm(request.POST, instance=event)
         if form.is_valid():
             cleaned_data = form.cleaned_data
             for field in form.fields:
                 value = cleaned_data.get(field)
-                if value is not None:
-                    setattr(event, field, value)
+                if value:
+                    setattr(event1, field, value)
             # dd(event)
-            event.save()
+            event1.save()
             return redirect('events:create')
     
 def event_detail(request, event_id):
     event = get_object_or_404(Event, event_id=event_id)
-    return render(request, 'event_detail.html', {'event': event})
+    user = request.user
+    return render(request, 'event_detail.html', {'event': event,'user':user})
  
 def event_listing(request) :
     context = {

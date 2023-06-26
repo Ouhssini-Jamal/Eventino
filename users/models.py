@@ -18,6 +18,9 @@ class Client(User):
     phone_number = models.CharField(max_length=20)
     image = models.ImageField(upload_to='client_images/')
     cin = models.CharField(max_length=20)
+    @property
+    def is_client(self):
+        return True
     # Additional fields and methods specific to the Client model
     
 # class TicketType(models.Model):

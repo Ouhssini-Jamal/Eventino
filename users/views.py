@@ -63,7 +63,7 @@ def register_client(request):
 def login_view(request):
     user = request.user
     if user.is_authenticated:
-        return redirect('dash')
+        return redirect('/')
     else :
         form = LoginForm(request, data=request.POST)
         if request.method == 'POST':
@@ -73,7 +73,7 @@ def login_view(request):
                 user = authenticate(request, username=username, password=password)
                 if user is not None:
                     login(request, user)
-                    return redirect('dash')    
+                    return redirect('/')    
             else:
                 context = {
                     'form': form,
@@ -139,16 +139,17 @@ def index(request):
 
 def search_events(request):
     query = request.GET.get('EventName', '')  # Get the search query from the request GET parameters
-    events = Event.objects.all()
+    events = Event.objects.filter(status="confirmed")
     if query :
         events = events.filter(
             Q(name__icontains=query) |        # Search by event name (case-insensitive)
-            Q(location__icontains=query)   # Search by city (case-insensitive)
-        ).filter(status="confirmed").distinct()
+            Q(location__icontains=query) |
+            Q(description__icontains=query)  # Search by city (case-insensitive)
+        ).distinct()
     category_id = request.GET.get('category')
     if category_id:
         category = Category.objects.get(category_id=category_id)
-        events = events.filter(categories=category, status='confirmed')
+        events = events.filter(categories=category)
     Date = request.GET.get('Date')
 
     if Date : 
@@ -156,7 +157,7 @@ def search_events(request):
     
     Price = request.GET.get('Price')
     if Price:
-        events = events.filter(standard__lte=Price, status='confirmed')
+        events = events.filter(standard__lte=Price)
         
     categories = Category.objects.all()
     context = {
@@ -193,3 +194,9 @@ def organizer_profile(request):
 
 def client_profile(request):
     return render(request, 'client_profile.html')
+
+def deactivate_organizer(request, organizer_id):
+    organizer = Organizer.objects.get(id=organizer_id)
+    organizer.is_active = False
+    organizer.save()
+    return redirect('manage_organizers') 
