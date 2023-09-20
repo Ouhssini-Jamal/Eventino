@@ -91,6 +91,11 @@ from django.db.models import Sum
 def dashboard_show(request):
     user = request.user
     if hasattr(user, 'organizer'):
+          # Get the search query from the request GET parameters
+        events = Event.objects.filter( Q(location__icontains='agadir'))
+        aga = events.count()
+        events = Event.objects.filter( Q(location__icontains='casa'))
+        casa = events.count()
         event_count = user.event_set.count()
         events = Event.objects.filter(organizer=user)
         confirmed_bookings = Booking.objects.filter(event__in=events, status='confirmed')
@@ -99,16 +104,20 @@ def dashboard_show(request):
         total_bookings = confirmed_bookings.count()
         context = {'event_count': event_count,
                    'total_earnings': total_earnings,
-                   'total_bookings' : total_bookings
+                   'total_bookings' : total_bookings,
+                   'casa' : casa,
+                   'aga' : aga,
                    }
         return render(request, 'Dashboard-organizer.html',context)
     elif hasattr(user, 'client'):
         bk = Booking.objects.filter(client=user, status='confirmed')
+        bks = bk[1:3]
         total_bookings = bk.count()
         total_spending = bk.aggregate(sum_total=Sum('total_price'))
         total_spending = total_spending['sum_total'] or 0
         context = {'total_bookings': total_bookings,
                    'total_spending': total_spending,
+                   'bks' : bks,
                    }
         return render(request, 'Dashboard-client.html',context)
     elif user.is_superuser: 

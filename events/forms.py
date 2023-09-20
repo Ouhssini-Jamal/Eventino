@@ -44,6 +44,7 @@ class EventUpdateForm(forms.ModelForm):
     mid_left = forms.IntegerField(required=False)
     vip_left = forms.IntegerField(required=False)
     status_choices = [
+        ('',''),
         ('finished', 'Finished'),
         ('cancelled', 'Cancelled'),
     ]
