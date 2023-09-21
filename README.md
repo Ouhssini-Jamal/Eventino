@@ -1,4 +1,4 @@
-# Online Event Reservation Application
+# Online Event Booking Application
 
 This project is an online event reservation application that allows users to browse and book events online. It provides a convenient platform for event organizers to list their events and for users to discover and reserve their desired events.
 
